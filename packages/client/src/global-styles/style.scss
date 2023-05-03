@@ -1,0 +1,19 @@
+@import "styles/normalize.scss";
+@import "styles/root.scss";
+@import "styles/fonts.scss";
+@import "styles/arrow.scss";
+@import "styles/buttons.scss";
+@import "styles/link.scss";
+@import "styles/utils.scss";
+@import "styles/containers.scss";
+@import "styles/inputs.scss";
+@import "styles/typography.scss";
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--color-white);
+}
+
+p {
+  color: var(--color-on-surface);
+}

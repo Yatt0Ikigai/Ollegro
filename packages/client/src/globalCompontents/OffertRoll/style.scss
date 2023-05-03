@@ -1,0 +1,97 @@
+.offert-roll {
+    &__container {
+        height: 25rem;
+        width: 100%;
+        background-color: var(--color-gray);
+        border: 1px solid var(--color-accent);
+        position: relative;
+        overflow-x: hidden;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+    }
+
+    &__list {
+        display: flex;
+        justify-items: center;
+        gap: 1rem;
+        transition: all ease-out .5s;
+    }
+
+    &__card {
+        box-sizing: border-box;
+        background: white;
+        border: 1px solid var(--color-accent);
+        padding: 10px 20px;
+        width: 16rem;
+        border-radius: 10px;
+    }
+
+    &__card:link {
+        text-decoration: none;
+    }
+
+    &__card:hover &__title {
+        color: blue;
+    }
+
+    &__image {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    &__price {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: black;
+    }
+
+    &__title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: black;
+    }
+
+    &__button {
+        appearance: none;
+        background-color: white;
+        border: 1px solid var(--color-accent);
+        padding: 6px;
+        border-radius: .5rem;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 20;
+
+        &:active {
+            transform: translateY(-50%) scale(.95);
+        }
+
+        &-left {
+            left: 0;
+        }
+
+        &-right {
+            right: 0;
+        }
+    }
+
+    &__dot-box {
+        position: absolute;
+        display: flex;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(-6px);
+        gap: 5px;
+    }
+
+    &__dot {
+        border: none;
+        width: 10px;
+        height: 10px;
+        background-color: black;
+        content: "";
+        border-radius: 100%;
+    }
+}

@@ -1,0 +1,45 @@
+.register-container {
+    padding: 4rem 14rem 0rem 14rem;
+}
+
+.register__box {
+    margin: 0 auto;
+    width: 35rem;
+    background-color: white;
+    border: 1px solid var(--color-accent);
+    padding: 2rem;
+}
+
+
+.register-header {
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin: 0 auto;
+    width: 35rem;
+}
+
+.register__form{
+    gap: 1rem;    
+    display: flex;
+    flex-direction: column;
+}
+
+.register__form-row {
+    display: flex;
+    flex-direction: column;
+
+    &-header{
+        color: black;
+        padding-bottom: .3rem;
+    }
+
+    &-description{
+        padding-bottom: .2rem;
+    }
+
+    &-checkbox{
+        padding-right: 2rem;
+        width: 1rem;
+        height: 1rem;
+    }
+}

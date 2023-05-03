@@ -1,0 +1,33 @@
+.login-container{
+    padding: 4rem 14rem 0rem 14rem;
+}
+
+.login__grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.login__box {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid var(--color-accent);
+    gap: 1rem;
+    padding: 2rem;
+
+    &-fill {
+        grid-row: span 2;
+    }
+}
+
+.login__header {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}

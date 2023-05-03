@@ -1,0 +1,96 @@
+/*FLEX BOX */
+.util-flex{
+    display: flex;
+}
+
+.util-flex-column{
+    flex-direction: column;
+}
+
+.util-center-main-axis{
+    justify-content: center;
+}
+
+.util-spacebetween-main-axis{
+    justify-content: space-between;
+}
+
+.util-center-second-axis{
+    align-items: center;
+}
+
+
+/* GRID */
+.util-grid{
+    display: grid;
+}
+
+
+
+
+.util-gap{
+    &-sm{
+        gap: .2rem;
+    }
+    &-md{
+        gap: .5rem;
+    }
+    &-xl{
+        gap: 1rem;
+    }
+}
+
+
+
+
+
+.util-border-between{
+    &:not(:last-child){
+        border-bottom: 1px solid var(--color-accent);
+    }
+}
+
+.util-whitespace-preline{
+    white-space: pre-line;
+}
+
+
+.util-pb{
+    &-sm{
+        padding-bottom: .2rem;
+    }
+    &-md{
+        padding-bottom: .5rem;
+    }
+    &-xl{
+        padding-bottom: 1rem;
+    }
+}
+
+.util-w-full{
+    width: 100%;
+}
+
+.util-h-full{
+    height: 100%;
+}
+
+.util-aspect-square{
+    aspect-ratio: 1 / 1;
+}
+
+.util-aspect-video {
+    aspect-ratio: 16 / 9;
+}
+
+.util-fit-cover{
+    object-fit: cover;
+}
+
+.util-fit-contain{
+    object-fit: contain;
+}
+
+.util-max-height-content{
+    height: max-content;
+}

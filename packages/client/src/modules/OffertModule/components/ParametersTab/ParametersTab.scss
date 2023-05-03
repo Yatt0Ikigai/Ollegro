@@ -1,0 +1,21 @@
+.table {
+    border-spacing: 0;
+}
+
+.table-row{
+    height: 2rem;
+
+    td {
+        padding: 0;
+    }
+
+    &:nth-child(odd){
+        background-color: beige;
+    }
+}
+
+
+.table-header{
+    width: 250px;
+    font-weight: 400;
+}
