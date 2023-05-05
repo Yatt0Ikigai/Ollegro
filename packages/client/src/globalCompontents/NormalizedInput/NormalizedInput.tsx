@@ -1,17 +1,15 @@
-import React from 'react'
+import React, { forwardRef, useEffect } from 'react'
 import "./NormalizedInput.scss";
 
-export function NormalizedInput({
+export const NormalizedInput = forwardRef(({
     children,
     placeholder,
-    ref,
     showValue = true,
 }: {
     placeholder: string,
-    ref: React.Ref<HTMLInputElement>,
     children?: string | JSX.Element | JSX.Element[] | (() => JSX.Element),
     showValue?: boolean
-}) {
+}, ref: React.Ref<HTMLInputElement>) => {
     return (
         <div className='normalized-input__box'>
             <input
@@ -25,4 +23,4 @@ export function NormalizedInput({
             {children}
         </div>
     )
-}
+})
