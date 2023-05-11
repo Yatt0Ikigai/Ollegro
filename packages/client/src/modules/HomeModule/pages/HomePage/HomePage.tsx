@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavbarGlobalComponent, OffertRoll } from "globalCompontents"
+import { NavbarGlobalComponent } from "globalCompontents"
 
 import InformationTab from "../../compontents/InformationTab/InformationTab";
 
@@ -10,8 +10,7 @@ export const HomePage: React.FC = () => {
     return (
         <div className="container">
             <NavbarGlobalComponent />
-            <div className="content">
-                <OffertRoll />
+            <div className="content content-narrow">
                 <InformationTab/>
             </div>
         </div>

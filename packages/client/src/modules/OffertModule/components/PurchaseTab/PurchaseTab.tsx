@@ -2,7 +2,7 @@ import React from 'react'
 
 export function PurchaseTab() {
   return (
-    <div className='white__box'>
+    <div className='white-box'>
       <h4 className='header header-xl'>
         Kaczka kwa kwa
       </h4>

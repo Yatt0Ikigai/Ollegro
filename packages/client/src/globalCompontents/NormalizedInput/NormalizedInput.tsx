@@ -8,7 +8,7 @@ export const NormalizedInput = forwardRef(({
 }: {
     placeholder: string,
     children?: string | JSX.Element | JSX.Element[] | (() => JSX.Element),
-    showValue?: boolean
+    showValue?: boolean,
 }, ref: React.Ref<HTMLInputElement>) => {
     return (
         <div className='normalized-input__box'>

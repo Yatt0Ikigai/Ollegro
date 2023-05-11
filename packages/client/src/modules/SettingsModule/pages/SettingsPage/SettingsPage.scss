@@ -1,0 +1,30 @@
+.overview-box {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+}
+
+.settings-section {
+    line-height: 1.6rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+
+    &:not(:last-child) > *  {
+        border-right: 1px solid var(--color-accent);
+    }
+
+    & span {
+        display: block;
+    }
+}
+
+.settings-icon{
+    width: 4rem;
+    height: 4rem;
+    padding-right: 1rem;
+}
+
+
+.settings-box{
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+}

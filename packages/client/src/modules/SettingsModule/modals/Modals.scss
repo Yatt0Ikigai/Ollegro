@@ -1,0 +1,24 @@
+.modal-box {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    min-width: 30rem;
+}
+
+.modal-header{
+    position: relative;
+
+    &-button {
+        appearance: none;
+        border: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-color: transparent;
+    }
+
+    &-icon {
+        width: 1.5rem;
+        height: 1.5rem;;
+    }
+}

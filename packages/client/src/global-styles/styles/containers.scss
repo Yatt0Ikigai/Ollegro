@@ -1,4 +1,4 @@
-.white__box {
+.white-box {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -11,7 +11,14 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    padding: 2rem 5rem;
+
+    &-wide {
+        padding: 2rem 5rem;
+    }
+
+    &-narrow {
+        padding: 2rem 20rem;
+    }
 }
 
 .container{

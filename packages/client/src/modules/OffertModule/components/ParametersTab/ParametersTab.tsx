@@ -4,7 +4,7 @@ import "./ParametersTab.scss";
 
 export function ParametersTab() {
   return (
-    <div className='white__box'>
+    <div className='white-box'>
         <h4 className='header header-xl'>
           Params
         </h4>

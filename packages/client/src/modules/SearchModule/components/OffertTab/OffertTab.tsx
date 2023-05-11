@@ -6,7 +6,7 @@ import "./OffertTab.scss";
 export function OffertTab() {
 
   return (
-    <div className='white__box'>
+    <div className='white-box'>
       <div className='util-flex util-flex-column'>
         <h4 className='header header-md'>Offerts</h4>
         <OffertRow id="42342132" condition='New' title='Kaczka kwakwa' author='Andrzej' price={20.02} imgSource={imgUrl}/>

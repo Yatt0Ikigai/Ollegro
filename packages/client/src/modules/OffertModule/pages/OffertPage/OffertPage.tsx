@@ -13,7 +13,7 @@ export const OffertPage: React.FC = () => {
     return (
         <div className="container">
             <NavbarGlobalComponent />
-            <div className="content">
+            <div className="content-wide">
                 <div className="offert-box">
                     <div className="util-flex util-flex-column util-gap-xl util-w-full">
                         <ImageTab />

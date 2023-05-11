@@ -12,7 +12,7 @@ export const SearchPage: React.FC = () => {
     return (
         <div className="container">
             <NavbarGlobalComponent />
-            <div className="content">
+            <div className="content content-wide">
                 <h3 className="search-header">You searched for „{searchParams.get("string")}”</h3>
                 <div className="search-box">
                     <FilterTab/>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export function SeeTab() {
   return (
-    <div className='white__box'>
+    <div className='white-box'>
       <h4 className='header header-xl'>
         See
       </h4>

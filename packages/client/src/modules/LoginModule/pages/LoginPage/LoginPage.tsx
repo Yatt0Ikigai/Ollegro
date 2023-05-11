@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import Navbar from "../../components/Navbar/Navbar";
+import { Link } from "react-router-dom";
 
+import { postRequest } from "utils/axios/requests";;
+
+import Navbar from "../../components/Navbar/Navbar";
 import { NormalizedInput } from "globalCompontents";
 
 import "./LoginPage.scss";
-import { Link } from "react-router-dom";
 
 export const LoginPage: React.FC = () => {
     let emailRef = useRef<HTMLInputElement | null>(null);
@@ -18,7 +20,17 @@ export const LoginPage: React.FC = () => {
                 <div className="login__grid">
                     <div className="login__box">
                         <h2 className="login__header">Log in</h2>
-                        <form className="login__form">
+                        <form className="login__form"
+                            onSubmit={async (e) => {
+                                e.preventDefault();
+                                if (!emailRef.current || !passwordRef.current) return;
+                                console.log(await postRequest("crt", {
+                                    user: {
+                                        login: emailRef.current.value,
+                                        password: passwordRef.current.value
+                                    }
+                                }));
+                            }}>
                             <NormalizedInput
                                 placeholder="Email"
                                 ref={emailRef}

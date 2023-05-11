@@ -25,6 +25,9 @@
     display: grid;
 }
 
+.util-grid-cols-2{
+    grid-template-columns: 1fr 1fr;
+}
 
 
 
@@ -93,4 +96,12 @@
 
 .util-max-height-content{
     height: max-content;
+}
+
+.util-text-highlight{
+    color: var(--color-primary)
+}
+
+.util-text-center{
+    text-align: center;
 }

@@ -5,7 +5,7 @@ import "./ImageTab.scss";
 
 export function ImageTab() {
     return (
-        <div className='white__box'>
+        <div className='white-box'>
             <div className="util-flex util-spacebetween-main-axis util-center-second-axis">
                 <h2 className='header-xl'>
                     Kaczka kwa kwa

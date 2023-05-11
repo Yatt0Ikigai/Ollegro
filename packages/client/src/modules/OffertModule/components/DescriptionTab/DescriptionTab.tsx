@@ -2,7 +2,7 @@ import React from 'react'
 
 export function DescriptionTab() {
   return (
-    <div className='white__box'>
+    <div className='white-box'>
         <h4 className='header header-xl'>
           Description
         </h4>
