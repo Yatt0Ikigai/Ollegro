@@ -3,6 +3,10 @@
     display: flex;
 }
 
+.util-flex-row{
+    flex-direction: row;
+}
+
 .util-flex-column{
     flex-direction: column;
 }
@@ -17,6 +21,10 @@
 
 .util-center-second-axis{
     align-items: center;
+}
+
+.util-flex-grow{
+    flex-grow: 1;
 }
 
 
