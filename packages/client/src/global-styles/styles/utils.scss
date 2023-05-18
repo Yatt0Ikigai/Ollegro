@@ -1,52 +1,59 @@
 /*FLEX BOX */
-.util-flex{
+.util-flex {
     display: flex;
 }
 
-.util-flex-row{
+.util-flex-row {
     flex-direction: row;
 }
 
-.util-flex-column{
+.util-flex-column {
     flex-direction: column;
 }
 
-.util-center-main-axis{
+.util-center-main-axis {
     justify-content: center;
 }
 
-.util-spacebetween-main-axis{
+.util-spacebetween-main-axis {
     justify-content: space-between;
 }
 
-.util-center-second-axis{
-    align-items: center;
+
+.util-center-second-axis {
+    align-self: center;
 }
 
-.util-flex-grow{
+.util-self-end-main-axis {
+    align-self: flex-end;
+}
+
+.util-flex-grow {
     flex-grow: 1;
 }
 
 
 /* GRID */
-.util-grid{
+.util-grid {
     display: grid;
 }
 
-.util-grid-cols-2{
+.util-grid-cols-2 {
     grid-template-columns: 1fr 1fr;
 }
 
 
 
-.util-gap{
-    &-sm{
+.util-gap {
+    &-sm {
         gap: .2rem;
     }
-    &-md{
+
+    &-md {
         gap: .5rem;
     }
-    &-xl{
+
+    &-xl {
         gap: 1rem;
     }
 }
@@ -55,38 +62,48 @@
 
 
 
-.util-border-between{
-    &:not(:last-child){
+.util-border-between {
+    &:not(:last-child) {
         border-bottom: 1px solid var(--color-accent);
     }
 }
 
-.util-whitespace-preline{
+.util-whitespace-preline {
     white-space: pre-line;
 }
 
 
-.util-pb{
-    &-sm{
+.util-pb {
+    &-sm {
         padding-bottom: .2rem;
     }
-    &-md{
+
+    &-md {
         padding-bottom: .5rem;
     }
-    &-xl{
+
+    &-xl {
         padding-bottom: 1rem;
     }
 }
 
-.util-w-full{
+.util-w-full {
     width: 100%;
 }
 
-.util-h-full{
+.util-w-max {
+    width: max-content;
+}
+
+.util-h-full {
     height: 100%;
 }
 
-.util-aspect-square{
+.util-h-max{
+    height: max-content;
+}
+
+.util-aspect-square {
     aspect-ratio: 1 / 1;
 }
 
@@ -94,22 +111,22 @@
     aspect-ratio: 16 / 9;
 }
 
-.util-fit-cover{
+.util-fit-cover {
     object-fit: cover;
 }
 
-.util-fit-contain{
+.util-fit-contain {
     object-fit: contain;
 }
 
-.util-max-height-content{
+.util-max-height-content {
     height: max-content;
 }
 
-.util-text-highlight{
+.util-text-highlight {
     color: var(--color-primary)
 }
 
-.util-text-center{
+.util-text-center {
     text-align: center;
 }

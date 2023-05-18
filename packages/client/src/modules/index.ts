@@ -6,3 +6,4 @@ export * from './RegisterModule/pages';
 export * from './SearchModule/pages';
 export * from './SettingsModule/pages';
 export * from './BoughtProductsModule/pages';
+export * from './MyOffertsModule/pages';

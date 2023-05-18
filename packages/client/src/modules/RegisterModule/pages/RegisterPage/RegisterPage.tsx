@@ -37,8 +37,7 @@ export const RegisterPage: React.FC = () => {
                         <div className="register__form-row">
                             <h3 className="register__form-row-header">2. Your age</h3>
                             <span className="register__form-row-description">We need from you exact date of birth</span>
-                            <input type="date" />
-                            {/* Later change to React date picker*/}
+                            <input type="date" /> {/*TODO: Later change to React date picker*/}
                         </div>
                         <div className="register__form-row">
                             <h3 className="register__form-row-header">3. Consents and declarations</h3>

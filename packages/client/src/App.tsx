@@ -5,7 +5,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import { HomePage, SearchPage, OffertPage, LoginPage, RegisterPage, GeneralSettingsPage, BoughtProductsPage } from "./modules";
+import { HomePage, SearchPage, OffertPage, LoginPage, RegisterPage, GeneralSettingsPage, BoughtProductsPage, MyOffertsPage } from "./modules";
 import "./global-styles/style.scss";
 
 import "./index.css";
@@ -22,6 +22,7 @@ const App = () => (
       <Route path="/my-ollegro">
         <Route path="settings" element={<GeneralSettingsPage />}/>
         <Route path="bought-products" element={<BoughtProductsPage />}/>
+        <Route path="offerts" element={<MyOffertsPage />}/>
       </Route>
     </Routes>
   </BrowserRouter>
