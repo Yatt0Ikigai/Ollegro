@@ -1,0 +1,15 @@
+.form {
+    &__title {}
+
+    &__description{
+        resize: none;
+        height: 10rem;
+    }
+
+    &__fieldset{
+        border-radius: .2rem;
+        border: 1px solid var(--color-accent);
+        font-size: .9rem;
+        font-weight: 300;
+    }
+}

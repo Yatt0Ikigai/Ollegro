@@ -17,12 +17,17 @@
 
         &:focus {
             outline: none;
-            border: 2px solid var(--color-accent)
+            border: 2px solid var(--color-accent);
         }
 
         &:hover {
             outline: none;
-            border: 2px solid var(--color-accent)
+            border: 2px solid var(--color-accent);
+        }
+
+        &:invalid{
+            outline:none;
+            border: 2px solid red;
         }
     }
 
