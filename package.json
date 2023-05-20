@@ -6,7 +6,7 @@
     "private": true,
     "scripts": {
       "start-client": "cd ./packages/client && npm start",
-      "start-server": "cd ./packages/server && python server.py"
+      "start-server": "cd ./packages/api && npm start"
     },
     "workspaces": [
       "packages/*"

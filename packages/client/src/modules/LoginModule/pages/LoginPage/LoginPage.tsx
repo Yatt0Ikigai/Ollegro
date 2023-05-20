@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { postRequest } from "utils/axios/requests";;
-
 import Navbar from "../../components/Navbar/Navbar";
 import { NormalizedInput } from "globalCompontents";
+import { trpc } from "utils/trpc";
+
 
 import "./LoginPage.scss";
 
@@ -12,6 +12,11 @@ export const LoginPage: React.FC = () => {
     let emailRef = useRef<HTMLInputElement | null>(null);
     let passwordRef = useRef<HTMLInputElement | null>(null);
 
+    const login = trpc.auth.login.useMutation({
+        onSuccess: (e) => {
+            console.log(e);
+        }
+    });
 
     return (
         <div className="container">
@@ -24,12 +29,10 @@ export const LoginPage: React.FC = () => {
                             onSubmit={async (e) => {
                                 e.preventDefault();
                                 if (!emailRef.current || !passwordRef.current) return;
-                                console.log(await postRequest("crt", {
-                                    user: {
-                                        login: emailRef.current.value,
-                                        password: passwordRef.current.value
-                                    }
-                                }));
+                                login.mutate({
+                                    email: emailRef.current.value,
+                                    password: passwordRef.current.value
+                                })
                             }}>
                             <NormalizedInput
                                 placeholder="Email"

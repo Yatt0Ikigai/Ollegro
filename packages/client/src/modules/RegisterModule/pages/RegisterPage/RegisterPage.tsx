@@ -6,10 +6,17 @@ import { NormalizedInput } from "globalCompontents";
 import { Link } from "react-router-dom";
 
 import { postRequest } from "utils/axios/requests";
+import { trpc } from "utils/trpc";
 
 export const RegisterPage: React.FC = () => {
     let emailRef = useRef<HTMLInputElement | null>(null);
     let passwordRef = useRef<HTMLInputElement | null>(null);
+
+    const createAccount = trpc.auth.register.useMutation({
+        onSuccess: (e) => {
+            console.log(e);
+        }
+    });
 
     return (
         <div className="container">
@@ -23,11 +30,10 @@ export const RegisterPage: React.FC = () => {
                             if (emailRef.current === null || emailRef.current.value === '') return;
                             if (passwordRef.current === null || passwordRef.current.value === '') return;
 
-                            const data = await postRequest("crt", { user: {
-                                login: emailRef.current.value, 
-                                password:passwordRef.current.value,
-                            }})
-                            console.log(data);
+                            createAccount.mutate({
+                                email:  emailRef.current.value,
+                                password: passwordRef.current.value
+                            })
                         }}>
                         <div className="register__form-row">
                             <h3 className="register__form-row-header">1. Registration details</h3>

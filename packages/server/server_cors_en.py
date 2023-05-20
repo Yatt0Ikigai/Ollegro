@@ -20,7 +20,7 @@ def md5(a):
 db = None #global database pointer
 
 app = Flask(__name__)
-cors = CORS(app)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @cross_origin()
 @app.route("/",methods=['GET']) #show webpage, link to download app
@@ -409,3 +409,5 @@ def setup():
 		db["accounts"].insert_one(adminacc)
 
 #sudo systemctl start mongod
+if __name__ == '__main__':
+   app.run(host='127.0.0.1',port=8080,debug=True)
