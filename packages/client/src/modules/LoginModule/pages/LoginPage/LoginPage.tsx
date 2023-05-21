@@ -18,7 +18,10 @@ export const LoginPage: React.FC = () => {
         onSuccess: (e) => {
             JSCookies.set("logged_in", "true");
             navigate('/');
-        }
+        },
+        onError: (e) => {
+           if(e.data && e.data.httpStatus === 401) alert("Invalid email or password")
+        },
     });
 
     return (
@@ -44,6 +47,7 @@ export const LoginPage: React.FC = () => {
                             <NormalizedInput
                                 placeholder="Password"
                                 ref={passwordRef}
+                                showValue={false}
                             />
 
                             <button type="submit" className="submit-button"> Log in </button>

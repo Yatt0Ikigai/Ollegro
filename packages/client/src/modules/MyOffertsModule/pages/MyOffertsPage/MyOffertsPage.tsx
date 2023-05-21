@@ -4,13 +4,17 @@ import "./MyOffertsPage.scss";
 import { NavbarGlobalComponent } from 'globalCompontents';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { trpc } from 'utils/trpc';
 
 
 export function MyOffertsPage() {
     const navigate = useNavigate();
+    const { data } = trpc.offert.getSelfOfferts.useQuery();
+
     useEffect(() => {
         if (Cookies.get("logged_in") !== "true") navigate('/')
-    }, [])
+    }, []);
+
     return (
         <div className="container">
             <NavbarGlobalComponent />
@@ -20,18 +24,20 @@ export function MyOffertsPage() {
                         Create Offert
                     </Link>
                     {
-                        [...Array(10)].map((e) => {
+                        data?.offerts.length === 0 ?? "You dont have any offerts"
+                    }
+                    {
+                        data?.offerts.map((e) => {
                             return (
                                 <BoughtProductCard
                                     date="12 maj 2023, 13:10"
-                                    id="1234567890"
-                                    imgSource={examplePic}
-                                    price={20.02}
-                                    title="Kaczka kwa kwa"
+                                    id={e.id}
+                                    imgSource={e.images[0]}
+                                    price={e.price}
+                                    title={e.title}
                                 />
                             )
-                        })
-                    }
+                        })}
                 </div>
             </div>
         </div>

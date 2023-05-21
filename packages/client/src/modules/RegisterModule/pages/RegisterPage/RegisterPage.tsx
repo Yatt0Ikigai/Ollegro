@@ -12,6 +12,10 @@ export const RegisterPage: React.FC = () => {
     const navigate = useNavigate();
     let emailRef = useRef<HTMLInputElement | null>(null);
     let passwordRef = useRef<HTMLInputElement | null>(null);
+    let firstNameRef = useRef<HTMLInputElement | null>(null);
+    let lastNameRef = useRef<HTMLInputElement | null>(null);
+    let overEighteenRef = useRef<HTMLInputElement | null>(null);
+    let agreedTermsRef = useRef<HTMLInputElement | null>(null);
 
     const createAccount = trpc.auth.register.useMutation({
         onSuccess: (e) => {
@@ -30,27 +34,38 @@ export const RegisterPage: React.FC = () => {
                             e.preventDefault();
                             if (emailRef.current === null || emailRef.current.value === '') return;
                             if (passwordRef.current === null || passwordRef.current.value === '') return;
+                            if (firstNameRef.current === null || firstNameRef.current.value === '') return;
+                            if (lastNameRef.current === null || lastNameRef.current.value === '') return;
+                            if (overEighteenRef.current === null || !overEighteenRef.current.checked) return;
+                            if (agreedTermsRef.current === null || !agreedTermsRef.current.checked) return;
 
                             createAccount.mutate({
-                                email:  emailRef.current.value,
-                                password: passwordRef.current.value
+                                email: emailRef.current.value,
+                                password: passwordRef.current.value,
+                                firstName: firstNameRef.current.value,
+                                lastName: lastNameRef.current.value
                             })
                         }}>
                         <div className="register__form-row">
                             <h3 className="register__form-row-header">1. Registration details</h3>
                             <NormalizedInput placeholder="email" ref={emailRef} />
-                            <NormalizedInput placeholder="password" ref={passwordRef} />
+                            <NormalizedInput placeholder="first name" ref={firstNameRef} />
+                            <NormalizedInput placeholder="last name" ref={lastNameRef} />
+                            <NormalizedInput placeholder="password" ref={passwordRef} showValue={false}/>
                         </div>
                         <div className="register__form-row">
                             <h3 className="register__form-row-header">2. Your age</h3>
-                            <span className="register__form-row-description">We need from you exact date of birth</span>
-                            <input type="date" /> {/*TODO: Later change to React date picker*/}
+                            <span className="register__form-row-description">To use site you must be above 18</span>
+                            <span>
+                                <input type="checkbox" ref={overEighteenRef} id="form-terms&age" className="register__form-row-checkbox" />
+                                <label htmlFor="form-terms&conditions"> *I declare that I am at least 18 years old</label>
+                            </span>
                         </div>
                         <div className="register__form-row">
                             <h3 className="register__form-row-header">3. Consents and declarations</h3>
                             <span>
-                                <input type="checkbox" id="form-terms&conditions" className="register__form-row-checkbox" />
-                                <label htmlFor="form-terms&conditions">* I declate that I have read and accept <Link to={"/statute"} className="link">the Ollegro Terms & Conditions.</Link></label>
+                                <input type="checkbox" ref={agreedTermsRef} id="form-terms&conditions" className="register__form-row-checkbox" />
+                                <label htmlFor="form-terms&conditions"> *I declate that I have read and accept <Link to={"/statute"} className="link">the Ollegro Terms & Conditions.</Link></label>
                             </span>
                         </div>
                         <button className="submit-button">

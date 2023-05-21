@@ -13,7 +13,7 @@ export const NormalizedInput = forwardRef(({
     return (
         <div className='normalized-input__box'>
             <input
-                type="text"
+                type={showValue ? "text" : "password"}
                 ref={ref}
                 className={"normalized-input__input"}
             />

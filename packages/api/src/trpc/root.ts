@@ -9,7 +9,7 @@ import { redisClient } from './redisServer';
 import { access_token_secret, refresh_token_secret } from '../config/default';
 
 import authRouter from './routers/auth';
-
+import offertRouter from './routers/offert'
 
 export const createContext = async ({ req, res, }: trpcExpress.CreateExpressContextOptions | CreateNextContextOptions) => {
     const notAuthenticated = { req, res, user: null };
@@ -62,6 +62,7 @@ const t = initTRPC.create();
 
 const appRouter = t.router({
     auth: authRouter,
+    offert: offertRouter
 })
 
 

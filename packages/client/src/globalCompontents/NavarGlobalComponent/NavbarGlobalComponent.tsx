@@ -82,11 +82,11 @@ export function NavbarGlobalComponent() {
                                 <div className='util-w-full'>
                                     <Link to={"/my-ollegro/settings"} className='link '>Settings</Link>
                                 </div>
-                                <button className='custom-link' onClick={(e) => {
+                                <div className='custom-link' onClick={(e) => {
                                     logOut.mutate();
                                 }}>
                                     Log out
-                                </button>
+                                </div>
                             </div>
                         }
                     </button>

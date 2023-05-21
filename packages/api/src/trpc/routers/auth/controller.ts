@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import bcrypt from 'bcryptjs';
 import { Context } from '../../root';
-import { authenticateToken, signTokens, verifyJWT } from '../../../utils/jwt';
+import { signTokens, verifyJWT } from '../../../utils/jwt';
 import { redisClient } from "../../redisServer";
 
 
@@ -11,13 +11,15 @@ export const createUserHandler = async ({ email, password, firstName, lastName }
     const newUser = await createUser({
       email: email.toLowerCase(),
       password: await bcrypt.hash(password, 10),
+      firstName: firstName,
+      lastName: firstName,
       avatar: "",
     });
     return newUser;
   } else throw new Error("User already exists");
 }
 import { Prisma, Users } from "@prisma/client"
-import { prisma } from '../../../utils/prisma';
+import { prisma } from '../../prisma';
 import { refresh_token_secret } from '../../../config/default';
 
 export const createUser = async (input: Prisma.UsersCreateInput) => {
@@ -44,6 +46,8 @@ export const registerHandler = async ({
     const user = await createUser({
       email: input.email.toLowerCase(),
       password: hashedPassword,
+      firstName: input.firstName,
+      lastName: input.lastName,
     });
 
         const { accessToken, refreshToken } = signTokens({id:user.id, role:'user'});
@@ -82,7 +86,7 @@ export const loginHandler = async ({ input, ctx, }: { input: { email: string, pa
     const user = await findUser({ email: input.email }, {id:true, password:true});
     if (!user || !(await bcrypt.compare(input.password, user.password))) {
       throw new TRPCError({
-        code: 'BAD_REQUEST',
+        code: 'UNAUTHORIZED',
         message: 'Invalid email or password',
       });
     }
