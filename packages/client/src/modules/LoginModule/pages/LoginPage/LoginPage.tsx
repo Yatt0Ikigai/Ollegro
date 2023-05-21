@@ -1,20 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Navbar from "../../components/Navbar/Navbar";
 import { NormalizedInput } from "globalCompontents";
 import { trpc } from "utils/trpc";
 
-
+import JSCookies from "js-cookie"
 import "./LoginPage.scss";
 
 export const LoginPage: React.FC = () => {
+    const navigate = useNavigate();
     let emailRef = useRef<HTMLInputElement | null>(null);
     let passwordRef = useRef<HTMLInputElement | null>(null);
 
+
     const login = trpc.auth.login.useMutation({
         onSuccess: (e) => {
-            console.log(e);
+            JSCookies.set("logged_in", "true");
+            navigate('/');
         }
     });
 

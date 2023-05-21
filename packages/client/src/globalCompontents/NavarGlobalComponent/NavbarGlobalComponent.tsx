@@ -14,7 +14,7 @@ export function NavbarGlobalComponent() {
     const isLogged = Cookies.get("logged_in") === "true";
     const logOut = trpc.auth.logOut.useMutation({
         onSuccess: () => {
-            navigate("/")
+            navigate(0)
         }
     });
 
@@ -59,7 +59,7 @@ export function NavbarGlobalComponent() {
                         <div className={`arrow ${openedMenu ? "arrow-up" : "arrow-down"}`} />
                         {
                             openedMenu && isLogged === false &&
-                            <div className='user-menu'>
+                            <div className='user-menu user-menu__logged'>
                                 <ShopingSvg className='user-menu__icon' />
                                 <h3 className='user-menu__header'>Welcome to Ollegro!</h3>
                                 <span className='user-menu__info'>Log in to see your shopping. At Ollegro, feel like at home!</span>
@@ -71,9 +71,17 @@ export function NavbarGlobalComponent() {
                             </div>
                         }
                         {
-                            openedMenu && isLogged  &&
-                            <div className='user-menu'>
-                                <Link to={"/my-ollegro/settings"} className='custom-link'>Settings</Link>
+                            openedMenu && isLogged &&
+                            <div className='user-menu user-menu__not-logged'>
+                                <div className='util-w-full'>
+                                    <Link to={"/my-ollegro/offerts"} className='link '>My offerts</Link>
+                                </div>
+                                <div className='util-w-full'>
+                                    <Link to={"/my-ollegro/bought-products"} className='link '>Bought offerts</Link>
+                                </div>
+                                <div className='util-w-full'>
+                                    <Link to={"/my-ollegro/settings"} className='link '>Settings</Link>
+                                </div>
                                 <button className='custom-link' onClick={(e) => {
                                     logOut.mutate();
                                 }}>

@@ -34,8 +34,10 @@ export const findUser = async (
 
 export const registerHandler = async ({
   input,
+  ctx
 }: {
-  input: Prisma.UsersCreateInput;
+  input: Prisma.UsersCreateInput,
+  ctx: Context
 }) => {
   try {
     const hashedPassword = await bcrypt.hash(input.password, 12);
@@ -44,6 +46,18 @@ export const registerHandler = async ({
       password: hashedPassword,
     });
 
+        const { accessToken, refreshToken } = signTokens({id:user.id, role:'user'});
+    
+    ctx.res.cookie('access_token', accessToken, { httpOnly: true });
+    ctx.res.cookie('refresh_token', refreshToken, { httpOnly: true });
+    ctx.res.cookie('logged_in', true);
+
+    redisClient.sAdd(user.id, refreshToken);
+
+    return {
+      status: 'success',
+      accessToken
+    };
     return {
       status: 'success',
       data: {
@@ -63,7 +77,7 @@ export const registerHandler = async ({
   }
 };
 
-export const loginHandler = async ({ input, ctx, }: { input: { email: string, password: string }, ctx: Context; }) => {
+export const loginHandler = async ({ input, ctx, }: { input: { email: string, password: string }, ctx: Context }) => {
   try {
     const user = await findUser({ email: input.email }, {id:true, password:true});
     if (!user || !(await bcrypt.compare(input.password, user.password))) {

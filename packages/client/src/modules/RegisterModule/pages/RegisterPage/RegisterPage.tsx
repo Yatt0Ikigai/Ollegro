@@ -5,16 +5,17 @@ import "./RegisterPage.scss";
 import { NormalizedInput } from "globalCompontents";
 import { Link } from "react-router-dom";
 
-import { postRequest } from "utils/axios/requests";
+import { useNavigate } from "react-router-dom";
 import { trpc } from "utils/trpc";
 
 export const RegisterPage: React.FC = () => {
+    const navigate = useNavigate();
     let emailRef = useRef<HTMLInputElement | null>(null);
     let passwordRef = useRef<HTMLInputElement | null>(null);
 
     const createAccount = trpc.auth.register.useMutation({
         onSuccess: (e) => {
-            console.log(e);
+            navigate('/')
         }
     });
 

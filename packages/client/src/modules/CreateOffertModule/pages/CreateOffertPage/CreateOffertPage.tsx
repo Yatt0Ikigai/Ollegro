@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { BsShieldCheck, BsPerson } from "react-icons/bs";
-import { useSearchParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
 
 import { NavbarGlobalComponent, NormalizedInput, NormalizedInputNumber } from "globalCompontents"
 
 import "./CreateOffertPage.scss"
 
 export const CreateOffertPage: React.FC = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (Cookies.get("logged_in") !== "true") navigate('/')
+      }, [])
+    
     return (
         <div className="container">
             <NavbarGlobalComponent />

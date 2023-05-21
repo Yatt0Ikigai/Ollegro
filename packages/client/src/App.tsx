@@ -4,18 +4,18 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
+  useNavigate
 } from "react-router-dom";
 import { trpc } from "./utils/trpc";
 import { httpBatchLink } from '@trpc/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HomePage, SearchPage, OffertPage, LoginPage, RegisterPage, GeneralSettingsPage, BoughtProductsPage, MyOffertsPage, CreateOffertPage } from "./modules";
-
+import Cookies from "js-cookie";
 
 import "./global-styles/style.scss";
 
 import "./index.css";
-
-
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient());
@@ -34,6 +34,8 @@ const App = () => {
       ],
     })
   )
+
+  const isLogged = Cookies.get("logged_in") === "true";
 
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>

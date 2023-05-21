@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavbarGlobalComponent } from "globalCompontents"
+import Cookies from "js-cookie";
 
 import "./BoughtProductCard.scss";
 
 export const BoughtProductsPage: React.FC = () => {
   const [offertAmount, setOffertAmount] = useState(27);
   const [currentlyLoadedAmount, setCurrentlyLoadedAmount] = useState(5);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (Cookies.get("logged_in") !== "true") navigate('/')
+  }, [])
 
   return (
     <div className="container">
@@ -19,13 +25,13 @@ export const BoughtProductsPage: React.FC = () => {
           [...Array(currentlyLoadedAmount)].map((e) => {
             return (
               <BoughtProductCard
-              author="Jan"
-              date="12 maj 2023, 13:10"
-              id="1234567890"
-              imgSource={examplePic}
-              price={20.02}
-              title="Kaczka kwa kwa"
-            />
+                author="Jan"
+                date="12 maj 2023, 13:10"
+                id="1234567890"
+                imgSource={examplePic}
+                price={20.02}
+                title="Kaczka kwa kwa"
+              />
             )
           })
         }
@@ -36,7 +42,7 @@ export const BoughtProductsPage: React.FC = () => {
             </span>
             :
             <button className="bought-product-card__button" onClick={() => {
-              setCurrentlyLoadedAmount( currentlyLoadedAmount + 5 > offertAmount ? offertAmount : currentlyLoadedAmount + 5)
+              setCurrentlyLoadedAmount(currentlyLoadedAmount + 5 > offertAmount ? offertAmount : currentlyLoadedAmount + 5)
             }}>
               Load More
             </button>

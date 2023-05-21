@@ -38,7 +38,8 @@ const authRouter = t.router({
           input: {
             email: input.email,
             password: input.password,
-          }
+          },
+          ctx
         });
         return {
           status: "success",

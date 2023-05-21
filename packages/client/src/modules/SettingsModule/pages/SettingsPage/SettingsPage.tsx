@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BsShieldCheck, BsPerson } from "react-icons/bs";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { NavbarGlobalComponent } from "globalCompontents"
 import SettingModal from "../../modals/ChangeEmailModal";
@@ -9,8 +9,13 @@ import FirstNameModal from "../../modals/ChangeFirstNameModal";
 import LastNameModal from "../../modals/ChangeLastNameModal";
 
 import "./SettingsPage.scss"
+import Cookies from "js-cookie";
 
 export const GeneralSettingsPage: React.FC = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (Cookies.get("logged_in") !== "true") navigate('/')
+    }, [])
     let [searchParams, setSearchParams] = useSearchParams();
 
     return (

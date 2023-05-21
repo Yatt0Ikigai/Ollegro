@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import "./MyOffertsPage.scss";
 import { NavbarGlobalComponent } from 'globalCompontents';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
 export function MyOffertsPage() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (Cookies.get("logged_in") !== "true") navigate('/')
+    }, [])
     return (
         <div className="container">
             <NavbarGlobalComponent />
