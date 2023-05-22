@@ -5,15 +5,21 @@ import { IoMdClose } from "react-icons/io";
 import { NormalizedInput } from 'globalCompontents';
 
 import "./Modals.scss";
+import { trpc } from 'utils/trpc';
+import { useNavigate } from 'react-router-dom';
 
 export default function SettingModal() {
     const [opened, setOpened] = useState(false);
     const lastNameRef = useRef<HTMLInputElement | null>(null);
     const lastNameConfirmRef = useRef<HTMLInputElement | null>(null);
+    const navigate = useNavigate();
+    const changeLastName = trpc.user.changeLastName.useMutation({
+        onSuccess: (e) => {
+            navigate(0);
+        }
+    })
+    
 
-    useEffect(() => {
-        console.log(opened)
-    }, [opened]);
 
     return (
         <div>
@@ -40,6 +46,7 @@ export default function SettingModal() {
                                     alert("Please provide same Password address");
                                     return;
                                 }
+                                changeLastName.mutate(lastNameRef.current.value);
                                 setOpened(false);
                             }}>
                             <NormalizedInput placeholder='New Last Name' ref={lastNameRef} />

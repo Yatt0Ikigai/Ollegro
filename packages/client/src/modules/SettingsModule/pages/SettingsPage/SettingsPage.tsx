@@ -1,22 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsShieldCheck, BsPerson } from "react-icons/bs";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Cookies from "js-cookie";
 
-import { NavbarGlobalComponent } from "globalCompontents"
-import SettingModal from "../../modals/ChangeEmailModal";
+import { trpc } from "utils/trpc";
+
+import { NavbarGlobalComponent, NormalizedInput } from "globalCompontents"
+import EmailModal from "../../modals/ChangeEmailModal";
 import PasswordModal from "../../modals/ChangePasswordModal";
 import FirstNameModal from "../../modals/ChangeFirstNameModal";
 import LastNameModal from "../../modals/ChangeLastNameModal";
 
 import "./SettingsPage.scss"
-import Cookies from "js-cookie";
 
 export const GeneralSettingsPage: React.FC = () => {
     const navigate = useNavigate();
+    const { data, isLoading } = trpc.user.getInfo.useQuery();
+    const deposit = trpc.user.depositMoney.useMutation({
+        onSuccess: () => {
+            navigate(0);
+        }
+    })
+
+    const balanceRef = useRef<HTMLInputElement | null>(null);
+
+
     useEffect(() => {
         if (Cookies.get("logged_in") !== "true") navigate('/')
     }, [])
     let [searchParams, setSearchParams] = useSearchParams();
+
+    if (isLoading || data == null) return <>Loading</>
 
     return (
         <div className="container">
@@ -24,15 +38,28 @@ export const GeneralSettingsPage: React.FC = () => {
             <div className="content content-narrow">
                 <div className="white-box overview-box">
                     <section className="settings-section">
-                        <h4 className="header header-md">Hello Jonas</h4>
-                        <span>RandomMail@gmail.com</span>
+                        <h4 className="header header-md">{data.user.firstName} {data.user.lastName}</h4>
+                        <span>{data.user.email}</span>
                     </section>
                     <section className="settings-section">
-                        <span>You are with us for </span>
-                        <span className="util-text-highlight">2 years, 2 monts and 7 days</span>
+                        <span>You are with us for</span>
+                        <span className="util-text-highlight">{data.user.createdAt}</span>
                     </section>
                 </div>
 
+                <div className="white-box overview-box util-flex util-center-second-axis">
+                    <div className="header header-md ">Current Balance: {data.user.ballance}</div>
+                    <form
+                        className="util-flex util-end-second-axis util-gap-md"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            if (!balanceRef.current) return;
+                            deposit.mutate(Number(balanceRef.current.value));
+                        }}>
+                        <NormalizedInput placeholder="New Balance" ref={balanceRef} />
+                        <button className='submit-button util-h-max'>Add Balance</button>
+                    </form>
+                </div>
 
                 <div className="util-grid util-grid-cols-2 util-gap-xl">
                     <div className="white-box settings-box">
@@ -44,7 +71,7 @@ export const GeneralSettingsPage: React.FC = () => {
                         <div className="settings-section">
                             <span className="util-w-full util-text-center"> Safety </span>
                             <div className="util-text-highlight util-flex util-flex-column">
-                                <SettingModal />
+                                <EmailModal />
                                 <PasswordModal />
                             </div>
                         </div>

@@ -19,14 +19,18 @@
     justify-content: space-between;
 }
 
-
-.util-center-second-axis {
-    align-self: center;
-}
-
 .util-self-end-main-axis {
     align-self: flex-end;
 }
+
+.util-center-second-axis {
+    align-items: center;
+}
+
+.util-end-second-axis {
+    align-items: end;
+}
+
 
 .util-flex-grow {
     flex-grow: 1;

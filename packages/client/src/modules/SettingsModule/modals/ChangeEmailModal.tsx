@@ -3,17 +3,24 @@ import { Portal, ModalContainer } from "globalCompontents"
 import { IoMdClose } from "react-icons/io";
 
 import { NormalizedInput } from 'globalCompontents';
+import { trpc } from 'utils/trpc';
 
 import "./Modals.scss";
+import { useNavigate } from 'react-router-dom';
 
 export default function SettingModal() {
     const [open, setOpen] = useState(false);
     const emailRef = useRef<HTMLInputElement | null>(null);
     const emailConfirmRef = useRef<HTMLInputElement | null>(null);
-
-    useEffect(() => {
-        console.log(open)
-    }, [open]);
+    const navigate = useNavigate();
+    const changeEmail = trpc.user.changeEmail.useMutation({
+        onSuccess: (e) => {
+            navigate(0);
+        },
+        onError: (e) => {
+            alert(e.data?.code);
+        }
+    })
 
     return (
         <div>
@@ -40,6 +47,7 @@ export default function SettingModal() {
                                     alert("Please provide same email address");
                                     return;
                                 }
+                                changeEmail.mutate(emailRef.current.value);
                                 setOpen(false);
                             }}>
                             <NormalizedInput placeholder='New Email' ref={emailRef} />

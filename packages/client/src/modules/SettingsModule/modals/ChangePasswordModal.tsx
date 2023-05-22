@@ -5,16 +5,20 @@ import { IoMdClose } from "react-icons/io";
 import { NormalizedInput } from 'globalCompontents';
 
 import "./Modals.scss";
+import { useNavigate } from 'react-router-dom';
+import { trpc } from 'utils/trpc';
 
 export default function SettingModal() {
     const [opened, setOpened] = useState(false);
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const passwordConfirmRef = useRef<HTMLInputElement | null>(null);
-
-    useEffect(() => {
-        console.log(opened)
-    }, [opened]);
-
+    const navigate = useNavigate();
+    const changePassword= trpc.user.changePassword.useMutation({
+        onSuccess: (e) => {
+            navigate(0);
+        }
+    })
+    
     return (
         <div>
             <button onClick={() => { setOpened(!opened) }} className='link util-w-full'>Change Password</button>
@@ -40,6 +44,7 @@ export default function SettingModal() {
                                     alert("Please provide same Password address");
                                     return;
                                 }
+                                changePassword.mutate(passwordRef.current.value);
                                 setOpened(false);
                             }}>
                             <NormalizedInput placeholder='New Password' ref={passwordRef} />
