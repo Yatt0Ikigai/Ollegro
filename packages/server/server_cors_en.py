@@ -1,5 +1,5 @@
 import json
-from flask import Flask,request,jsonify
+from flask import Flask,request,jsonify,redirect
 from flask_cors import CORS, cross_origin
 
 import pymongo
@@ -12,10 +12,13 @@ import hashlib
 
 from datetime import datetime,timezone
 
+#add https for security
+
 def md5(a):
 	return hashlib.sha256((str)(a).encode('utf-8')).hexdigest()
 
 db = None #global database pointer
+force_https = False #flag, redirect http to https
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -408,7 +411,14 @@ def setup():
 
 #sudo systemctl start mongod
 
+@app.before_request
+def ensure_https():
+    if (not request.is_secure) and force_https:
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
+
 if __name__ == "__main__":
     app.run(ssl_context='adhoc')
     #flask --app server run --cert=adhoc
-    #                       ^for https
+	#                       ^for https
