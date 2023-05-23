@@ -409,3 +409,8 @@ def setup():
 		db["accounts"].insert_one(adminacc)
 
 #sudo systemctl start mongod
+
+if __name__ == "__main__":
+    app.run(ssl_context='adhoc')
+    #flask --app server run --cert=adhoc
+    #                       ^for https
