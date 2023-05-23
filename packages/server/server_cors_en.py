@@ -12,8 +12,6 @@ import hashlib
 
 from datetime import datetime,timezone
 
-#add https for security
-
 def md5(a):
 	return hashlib.sha256((str)(a).encode('utf-8')).hexdigest()
 
