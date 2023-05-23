@@ -47,7 +47,7 @@ const App = () => {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/offert/:id" element={<OffertPage />} />
             <Route path="/listings" element={<SearchPage />} />
-            <Route path="/cathegory/:id" element={<SearchPage />} />
+            <Route path="/cathegory/:cathegoryId" element={<SearchPage />} />
             <Route path="/my-ollegro">
               <Route path="settings" element={<GeneralSettingsPage />} />
               <Route path="bought-products" element={<BoughtProductsPage />} />

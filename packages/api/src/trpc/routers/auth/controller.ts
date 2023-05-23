@@ -4,6 +4,9 @@ import { Context } from '../../root';
 import { signTokens, verifyJWT } from '../../../utils/jwt';
 import { redisClient } from "../../redisServer";
 
+import { Prisma, Users } from "@prisma/client"
+import { prisma } from '../../prisma';
+import { refresh_token_secret } from '../../../config/default';
 
 export const createUserHandler = async ({ email, password, firstName, lastName }: { email: string, password: string, firstName: string, lastName: string }) => {
   const user = await findUser({ email })
@@ -18,9 +21,6 @@ export const createUserHandler = async ({ email, password, firstName, lastName }
     return newUser;
   } else throw new Error("User already exists");
 }
-import { Prisma, Users } from "@prisma/client"
-import { prisma } from '../../prisma';
-import { refresh_token_secret } from '../../../config/default';
 
 export const createUser = async (input: Prisma.UsersCreateInput) => {
   return (await prisma.users.create({
@@ -50,8 +50,8 @@ export const registerHandler = async ({
       lastName: input.lastName,
     });
 
-        const { accessToken, refreshToken } = signTokens({id:user.id, role:'user'});
-    
+    const { accessToken, refreshToken } = signTokens({ id: user.id, role: 'user' });
+
     ctx.res.cookie('access_token', accessToken, { httpOnly: true });
     ctx.res.cookie('refresh_token', refreshToken, { httpOnly: true });
     ctx.res.cookie('logged_in', true);
@@ -61,12 +61,6 @@ export const registerHandler = async ({
     return {
       status: 'success',
       accessToken
-    };
-    return {
-      status: 'success',
-      data: {
-        user,
-      },
     };
   } catch (err: any) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
@@ -83,15 +77,15 @@ export const registerHandler = async ({
 
 export const loginHandler = async ({ input, ctx, }: { input: { email: string, password: string }, ctx: Context }) => {
   try {
-    const user = await findUser({ email: input.email }, {id:true, password:true});
+    const user = await findUser({ email: input.email }, { id: true, password: true });
     if (!user || !(await bcrypt.compare(input.password, user.password))) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
         message: 'Invalid email or password',
       });
     }
-    const { accessToken, refreshToken } = signTokens({id:user.id, role:'user'});
-    
+    const { accessToken, refreshToken } = signTokens({ id: user.id, role: 'user' });
+
     ctx.res.cookie('access_token', accessToken, { httpOnly: true });
     ctx.res.cookie('refresh_token', refreshToken, { httpOnly: true });
     ctx.res.cookie('logged_in', true);
@@ -107,9 +101,9 @@ export const loginHandler = async ({ input, ctx, }: { input: { email: string, pa
   }
 };
 
-export const logoutHandler = async ({ctx}: {ctx:Context}) => {
+export const logoutHandler = async ({ ctx }: { ctx: Context }) => {
   const { payload, err, expired } = verifyJWT(ctx.req.cookies.refresh_token, refresh_token_secret);
-  if( payload ) {
+  if (payload) {
     await redisClient.sRem(payload.id, ctx.req.cookies.refresh_token);
     ctx.res.cookie('access_token', '', { httpOnly: true, maxAge: -1 });
     ctx.res.cookie('refresh_token', '', { HttpOnly: true, maxAge: -1 });

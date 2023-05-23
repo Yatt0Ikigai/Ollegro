@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
 import Cookies from "js-cookie";
 import { trpc } from "utils/trpc";
 
@@ -10,6 +10,9 @@ import ShopingSvg from "../../../assets/shopping.svg";
 
 export function NavbarGlobalComponent() {
     const [openedMenu, setOpenedMenu] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const { cathegoryId } = useParams();
+    const { data } = trpc.cathegory.getCathegories.useQuery();
     const navigate = useNavigate();
     const isLogged = Cookies.get("logged_in") === "true";
     const logOut = trpc.auth.logOut.useMutation({
@@ -20,8 +23,6 @@ export function NavbarGlobalComponent() {
 
     let searchRef = useRef<HTMLInputElement | null>(null);
     let cathegoryRef = useRef<HTMLSelectElement | null>(null);
-
-
 
     return (
         <nav className='navbar'>
@@ -36,15 +37,20 @@ export function NavbarGlobalComponent() {
                         e.preventDefault();
                         if (!searchRef && !cathegoryRef) return;
                         if (searchRef.current?.value === "") return;
-                        if (cathegoryRef.current?.value === "all") navigate({ pathname: "/listings", search: `string=${searchRef.current?.value}` })
+                        if (cathegoryRef.current?.value === "") {
+                            navigate({ pathname: "/listings", search: `string=${searchRef.current?.value}` });
+                            navigate(0);
+                        }
                         else navigate({ pathname: `/cathegory/${cathegoryRef.current?.value}`, search: `string=${searchRef.current?.value}` })
                     }}>
-                        <input type="text" placeholder='What are you looking for?' className='navbar__form-input' ref={searchRef} />
+                        <input type="text" placeholder='What are you looking for?' className='navbar__form-input' ref={searchRef} defaultValue={searchParams.get("string") || ""}/>
                         <select className='navbar__form-select' ref={cathegoryRef}>
-                            <option value="all" defaultChecked>All categories</option>
-                            <option value="cars">Cars</option>
-                            <option value="food">Food</option>
-                            <option value="electronics">Electronics</option>
+                            <option value="" defaultChecked>All categories</option>
+                            {data && data.offert.map((v, index) => {
+                                return (
+                                    <option value={v.id} selected={v.id === cathegoryId}>{v.name}</option>
+                                )
+                            })}
                         </select>
                         <button className='navbar__form-submit'>Search</button>
                     </form>

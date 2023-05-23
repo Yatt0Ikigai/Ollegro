@@ -10,17 +10,19 @@ import "./CreateOffertPage.scss"
 export const CreateOffertPage: React.FC = () => {
     const navigate = useNavigate();
     const [image, setImage] = useState<string | ArrayBuffer | null>(null);
-    
+
     const createOffert = trpc.offert.createOffert.useMutation({
         onSuccess: () => {
             navigate("/my-ollegro/offerts")
         }
     })
-    
+    const { data } = trpc.cathegory.getCathegories.useQuery();
+
     const titleRef = useRef<HTMLInputElement | null>(null);
     const priceRef = useRef<HTMLInputElement | null>(null);
+    const cathegoryRef = useRef<HTMLSelectElement | null>(null);
     const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
-    
+
     const [condition, setCondition] = useState("new");
 
     const convertToBase64 = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +52,8 @@ export const CreateOffertPage: React.FC = () => {
                         price: Number(priceRef.current?.value),
                         condition: condition,
                         description: descriptionRef.current?.value as string,
-                        image: image as string
+                        image: image as string,
+                        cathegoryId: cathegoryRef.current?.value as string
                     })
                 }}>
                     <NormalizedInput
@@ -75,7 +78,7 @@ export const CreateOffertPage: React.FC = () => {
                             <input type="radio" id="new" name="condition" value="new"
                                 checked onChange={(e) => {
                                     e.target.value ? setCondition("new") : setCondition("false");
-                                }}/>
+                                }} />
                             <label htmlFor="new" className="util-w-full">New</label>
                         </div>
                         <div className="util-flex util-gap-md">
@@ -83,6 +86,13 @@ export const CreateOffertPage: React.FC = () => {
                             <label htmlFor="used" className="util-w-full">Used</label>
                         </div>
                     </fieldset>
+                    <select name="" id="" ref={cathegoryRef}>
+                        {data && data.offert.map((e) => {
+                            return (
+                                <option value={e.id}>{e.name}</option>
+                            )
+                        })}
+                    </select>
                     <button className="submit-button" type="submit">
                         Post offert
                     </button>

@@ -32,5 +32,12 @@ model Offert {
   title       String   @default("")
   price       Float
   images      String[]
-  closed      Boolean @default(false)
+  closed      Boolean  @default(false)
+  cathegoryId String   @db.ObjectId
+  condition   String   @default("New")
+}
+
+model Cathegory {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
 }

@@ -24,7 +24,6 @@ export const OffertPage: React.FC = () => {
                         <PurchaseTab/>
                         <SeeTab/>
                     </div>
-
                 </div>
             </div>
         </div>

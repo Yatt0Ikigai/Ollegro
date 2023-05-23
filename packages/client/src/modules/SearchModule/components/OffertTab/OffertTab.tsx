@@ -1,21 +1,37 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams, useParams } from 'react-router-dom'
+
+import { trpc } from "../../../../utils/trpc";
 
 import "./OffertTab.scss";
 
 export function OffertTab() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  let { cathegoryId } = useParams();
+
+  console.log(searchParams.get("min_price"))
+
+  let filters = [['min_price', "minPrice"], ['max_price', "maxPrice"], 'condition', [`string`, 'title']]
+    .reduce((acc, el) => {
+      if (el instanceof Array)
+        return searchParams.get(el[0]) ? { ...acc, [el[1]]: searchParams.get(el[0]) } : acc
+      return searchParams.get(el) ? { ...acc, [el]: searchParams.get(el) } : acc
+    }, {});
+
+  const { data } = trpc.offert.getOfferts.useQuery({
+    ...filters,
+    ...(cathegoryId ? { ["cathegoryId"]: cathegoryId } : {})
+  });
 
   return (
     <div className='white-box'>
       <div className='util-flex util-flex-column'>
         <h4 className='header header-md'>Offerts</h4>
-        <OffertRow id="42342132" condition='New' title='Kaczka kwakwa' author='Andrzej' price={20.02} imgSource={imgUrl}/>
-        <OffertRow id="42342132" condition='New' title='Kaczka kwakwa' author='Andrzej' price={20.02} imgSource={imgUrl}/>
-        <OffertRow id="42342132" condition='New' title='Kaczka kwakwa' author='Andrzej' price={20.02} imgSource={imgUrl}/>
-        <OffertRow id="42342132" condition='New' title='Kaczka kwakwa' author='Andrzej' price={20.02} imgSource={imgUrl}/>
-        <OffertRow id="42342132" condition='New' title='Kaczka kwakwa' author='Andrzej' price={20.02} imgSource={imgUrl}/>
-        <OffertRow id="42342132" condition='New' title='Kaczka kwakwa' author='Andrzej' price={20.02} imgSource={imgUrl}/>
-        <OffertRow id="42342132" condition='New' title='Kaczka kwakwa' author='Andrzej' price={20.02} imgSource={imgUrl}/>
+        {
+          data?.offerts && data.offerts.map((offert) => {
+            return <OffertRow id={offert.id} condition={offert.condition} title={offert.title} author={offert.ownerId} imgSource={offert.images[0]} price={offert.price} key={offert.id} />
+          })
+        }
       </div>
     </div>
   )
@@ -37,11 +53,11 @@ const OffertRow = ({
   id: string
 }) => {
   return (
-    <Link 
-    to={`/offert/${id}`}
-    className='offert-row__box'>
+    <Link
+      to={`/offert/${id}`}
+      className='offert-row__box'>
       <div className='offert-row__image'>
-        <img src={imgSource} alt="" className='util-w-full utill-h-full util-fit-cover'/>
+        <img src={imgSource} alt="" className='util-w-full utill-h-full util-fit-cover' />
       </div>
       <div className='offert-row__box-details'>
         <h4 className='offert-row__box-header'>{title}</h4>
