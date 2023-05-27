@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { t, authedProcedure, unauthedProcedure, procedure } from "../../utils/[trpc]";
 
-import { createOffertHandler, getSelfOffertsHandler, getOffertsHandler } from "./controller";
+import { createOffertHandler, getSelfOffertsHandler, getOffertsHandler, getSpecificOffertHandler, buyOffertHandler } from "./controller";
 
 const offertRoute = t.router({
   createOffert:
@@ -54,6 +54,28 @@ const offertRoute = t.router({
           status: "success",
           offerts
         }
+      }),
+  getSpecificOffert:
+    procedure
+      .input(z.object({
+        id: z.string()
+      }))
+      .query(async ({ ctx, input }) => {
+        const offert = await getSpecificOffertHandler({ offertId: input.id, ctx });
+        return {
+          status: "success",
+          offert
+        }
+      }),
+  buyOffert:
+    authedProcedure
+      .input(z.string())
+      .mutation(async ({ ctx, input }) => {
+        const result = await buyOffertHandler({ offertId: input, ctx });
+        return {
+          status: "success",
+          result
+        };
       })
 })
 

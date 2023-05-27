@@ -18,7 +18,7 @@ export function MyOffertsPage() {
     return (
         <div className="container">
             <NavbarGlobalComponent />
-            <div className="content-wide">
+            <div className="content-narrow">
                 <div className='white-box'>
                     <Link className='link util-w-max util-center-second-axis' to={'/my-ollegro/create-offert'}>
                         Create Offert

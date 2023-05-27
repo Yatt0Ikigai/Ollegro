@@ -1,14 +1,20 @@
 import React from 'react'
+import { trpc } from 'utils/trpc'
+import { useParams } from 'react-router-dom'
 
-export function DescriptionTab() {
+export function DescriptionTab({
+  description
+}:{
+  description: string
+}) {
   return (
     <div className='white-box'>
-        <h4 className='header header-xl'>
-          Description
-        </h4>
-        <span className='util-whitespace-preline'>
-          {description}
-        </span>
+      <h4 className='header header-xl'>
+        Description
+      </h4>
+      <span className='util-whitespace-preline'>
+        {description}
+      </span>
     </div>
   )
 }

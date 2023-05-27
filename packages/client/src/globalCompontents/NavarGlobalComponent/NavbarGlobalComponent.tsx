@@ -39,7 +39,6 @@ export function NavbarGlobalComponent() {
                         if (searchRef.current?.value === "") return;
                         if (cathegoryRef.current?.value === "") {
                             navigate({ pathname: "/listings", search: `string=${searchRef.current?.value}` });
-                            navigate(0);
                         }
                         else navigate({ pathname: `/cathegory/${cathegoryRef.current?.value}`, search: `string=${searchRef.current?.value}` })
                     }}>

@@ -40,7 +40,7 @@ export const changeLastNameHandler = async ({ newLastName, ctx }: { newLastName:
 
 export const depositHandler = async ({ amount, ctx }: { amount: number, ctx: Context }) => {
     await updateUser({ id: ctx.user?.id }, {
-        ballance: {
+        ballance:{
             increment: amount
         }
     })

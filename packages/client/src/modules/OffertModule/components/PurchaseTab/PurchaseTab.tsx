@@ -1,14 +1,37 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { trpc } from 'utils/trpc'
 
-export function PurchaseTab() {
+export function PurchaseTab({
+  price,
+  isOwner,
+  closed,
+  title,
+  id
+}:{
+  price: number,
+  isOwner: boolean,
+  closed: boolean,
+  title: string,
+  id: string
+}) {
+  const navigate = useNavigate();
+  const buyOffert = trpc.offert.buyOffert.useMutation({
+    onSuccess: (e) => {
+      navigate("/my-ollegro/bought-products")
+    }
+  })
+
   return (
     <div className='white-box'>
       <h4 className='header header-xl'>
-        Kaczka kwa kwa
+        {title}
       </h4>
-      <span className='header header-md'>PLN 20.02</span>
-      <button className='submit-button'>Buy Now</button>
-      <span>After clicking BUY NOW you will be directed to the delivery and payment summary. Your bank account will not be debited yet.</span>
+      <span className='header header-md'>PLN {price}</span>
+      <button className='submit-button' disabled={closed || isOwner} onClick={(e) => {
+        buyOffert.mutate(id);
+      }}>Buy Now</button>
+      <span>After clicking BUY NOW your bank account will be debited.</span>
     </div>
   )
 }

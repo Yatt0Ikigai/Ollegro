@@ -1,6 +1,6 @@
 import { NormalizedInput } from 'globalCompontents'
 import React, { useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import "./FilterTab.scss";
 
 export function FilterTab() {
@@ -10,19 +10,25 @@ export function FilterTab() {
   let usedConditionRef = useRef<HTMLInputElement | null>(null);
 
   let [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
-  useEffect(() => {
+  function updateParams(){
     const url = location.search
     let min_price = getQueryValues(url, "min_price")[0];
     let max_price = getQueryValues(url, "max_price")[0];
     let usedCondition = getQueryValues(url, "condition").find(e => e === "used");
     let newCondition = getQueryValues(url, "condition").find(e => e === "new");
 
-    if (min_price && minimumPriceRef.current) minimumPriceRef.current.value = min_price;
-    if (max_price && maximumPriceRef.current) maximumPriceRef.current.value = max_price;
-    if (usedCondition && usedConditionRef.current) usedConditionRef.current.checked = true;
-    if (newCondition && newConditionRef.current) newConditionRef.current.checked = true;
-  }, [])
+    if (minimumPriceRef.current) minimumPriceRef.current.value = min_price ?? null;
+    if (maximumPriceRef.current) maximumPriceRef.current.value = max_price ?? null;
+    if (usedConditionRef.current) usedConditionRef.current.checked = !!usedCondition;
+    if (newConditionRef.current) newConditionRef.current.checked = !!newCondition;
+  }
+
+
+  useEffect(() => {
+    updateParams();
+  }, [location])
 
   return (
     <form className='white-box util-max-height-content' onSubmit={(e) => {

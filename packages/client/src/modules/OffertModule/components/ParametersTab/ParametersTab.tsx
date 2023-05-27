@@ -2,26 +2,24 @@ import React from 'react'
 
 import "./ParametersTab.scss";
 
-export function ParametersTab() {
+export function ParametersTab({
+  condition
+}: {
+  condition: string
+}) {
   return (
     <div className='white-box'>
-        <h4 className='header header-xl'>
-          Params
-        </h4>
+      <h4 className='header header-xl'>
+        Params
+      </h4>
       <div className=''>
         <table className='table util-w-full'>
-          {staticParams.map((param) => {
-            return(
-              <tr className='table-row'>
-                <td className='table-header'>{param.header}</td>
-                <td className='table-value'>{param.value}</td>
-              </tr>
-            )
-          })}
+          <tr className='table-row'>
+            <td className='table-header'>Condition</td>
+            <td className='table-value'>{condition}</td>
+          </tr>
         </table>
       </div>
     </div>
   )
 }
-
-const staticParams = [{ header: "Condition", value: "New" }, { header: "Material", value: "plastic" }, { header: "Gender", value: "Boys, Girls" }]

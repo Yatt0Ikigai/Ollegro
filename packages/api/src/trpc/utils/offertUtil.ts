@@ -22,3 +22,10 @@ export const getOfferts = async (
 ) => {
     return await prisma.offert.findMany({ where, select }) as Offert[];
 }
+
+export const updateOffert = async (
+    where: Partial<Prisma.OffertWhereInput>,
+    data: Partial<Prisma.OffertUpdateInput>
+) => {
+    return await prisma.offert.update({ where, data }) as Offert
+}
