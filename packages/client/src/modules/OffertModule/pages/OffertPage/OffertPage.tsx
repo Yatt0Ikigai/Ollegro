@@ -20,15 +20,18 @@ export const OffertPage: React.FC = () => {
             <NavbarGlobalComponent />
             <div className="content-wide">
                 {
-                    !!data && <div className="offert-box">
-                        <div className="util-flex util-flex-column util-gap-xl util-w-full">
-                            <ImageTab imgSrc={data.offert.images[0]} title={data.offert.title} />
-                            <ParametersTab condition={data.offert.condition} />
-                            <DescriptionTab description={data.offert.description} />
-                        </div>
-                        <div className="util-flex util-flex-column util-gap-xl">
-                            <PurchaseTab id={id as string} price={data.offert.price} closed={data.offert.closed} isOwner={data.offert.isOwner} title={data.offert.title} />
-                            <SeeTab />
+                    !!data && <div className="util-flex util-flex-column util-gap-md">
+                        {data.offert.closed && <div className="white-box header header-xl">This offert is closed</div>}
+                        <div className="offert-box">
+                            <div className="util-flex util-flex-column util-gap-xl util-w-full">
+                                <ImageTab imgSrc={data.offert.images[0]} title={data.offert.title} />
+                                <ParametersTab condition={data.offert.condition} />
+                                <DescriptionTab description={data.offert.description} />
+                            </div>
+                            <div className="util-flex util-flex-column util-gap-xl">
+                                <PurchaseTab id={id as string} price={data.offert.price} closed={data.offert.closed} isOwner={data.offert.isOwner} title={data.offert.title} />
+                                <SeeTab />
+                            </div>
                         </div>
                     </div>
                 }

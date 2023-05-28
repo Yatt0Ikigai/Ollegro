@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { BsShieldCheck, BsPerson } from "react-icons/bs";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import moment from "moment";
 
 import { trpc } from "utils/trpc";
 
@@ -42,8 +43,8 @@ export const GeneralSettingsPage: React.FC = () => {
                         <span>{data.user.email}</span>
                     </section>
                     <section className="settings-section">
-                        <span>You are with us for</span>
-                        <span className="util-text-highlight">{data.user.createdAt}</span>
+                        <span>You are with us from</span>
+                        <span className="util-text-highlight">{moment(data.user.createdAt).format("MMM DD YYYY ")}</span>
                     </section>
                 </div>
 

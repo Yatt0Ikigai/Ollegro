@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 
-import "./MyOffertsPage.scss";
-import { NavbarGlobalComponent } from 'globalCompontents';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import moment from 'moment';
+
+import "./MyOffertsPage.scss";
+import { NavbarGlobalComponent } from 'globalCompontents';
 import { trpc } from 'utils/trpc';
 
 
@@ -18,27 +20,28 @@ export function MyOffertsPage() {
     return (
         <div className="container">
             <NavbarGlobalComponent />
-            <div className="content-narrow">
-                <div className='white-box'>
-                    <Link className='link util-w-max util-center-second-axis' to={'/my-ollegro/create-offert'}>
-                        Create Offert
-                    </Link>
-                    {
-                        data?.offerts.length === 0 ?? "You dont have any offerts"
-                    }
-                    {
-                        data?.offerts.map((e) => {
-                            return (
-                                <BoughtProductCard
-                                    date="12 maj 2023, 13:10"
-                                    id={e.id}
-                                    imgSource={e.images[0]}
-                                    price={e.price}
-                                    title={e.title}
-                                />
-                            )
-                        })}
-                </div>
+            <div className="content content-narrow util-gap-md">
+                <Link className='link util-w-max util-center-second-axis' to={'/my-ollegro/create-offert'}>
+                    Create Offert
+                </Link>
+                {
+                    data?.offerts.length === 0 ?? "You dont have any offerts"
+                }
+                {
+                    data?.offerts.map((e) => {
+                        return (
+                            <MyOffertCard
+                                createdDate={e.createdAt}
+                                boughtDate={e.boughtAt}
+                                id={e.id}
+                                imgSource={e.images[0]}
+                                price={e.price}
+                                title={e.title}
+                                closed={e.closed}
+                                key={`my-offert-${e.id}`}
+                            />
+                        )
+                    })}
             </div>
         </div>
     )
@@ -46,21 +49,30 @@ export function MyOffertsPage() {
 
 
 
-const BoughtProductCard = ({
+
+const MyOffertCard = ({
     imgSource,
     id,
     price,
     title,
-    date
+    createdDate,
+    boughtDate,
+    closed
 }: {
     imgSource: string,
     price: number,
     title: string,
     id: string,
-    date: string
+    createdDate: string,
+    closed: boolean,
+    boughtDate: string | null
 }) => {
     return (
-        <div className="util-w-full my-offert__card">
+        <div className="white-box bought-product-card util-w-full" >
+            <div className='util-flex util-spacebetween-main-axis'>
+                <div className="bought-product-card__header-date">Created {moment(createdDate).format("MMM DD YYYY")}</div>
+                {boughtDate && <div className="bought-product-card__header-date">Ended {moment(boughtDate).format("MMM DD YYYY")}</div>}
+            </div>
             <div className="util-flex util-gap-xl">
                 <div className="bought-product-card__image">
                     <img src={imgSource} alt="" className='util-w-full utill-h-full util-fit-cover' />
@@ -70,12 +82,10 @@ const BoughtProductCard = ({
                         {title}
                     </Link>
                 </div>
-                <button className='submit-button util-h-max'>
-                    Change Price
-                </button>
                 <div className="bought-product-card__price">
                     {price} zł
                 </div>
+                <button className='submit-button util-h-max' disabled={closed}>Change Price</button>
             </div>
         </div>
     )
@@ -83,4 +93,4 @@ const BoughtProductCard = ({
 
 
 
-const examplePic = "https://www.shutterstock.com/image-illustration/cute-yellow-rubber-duck-toy-260nw-1359388691.jpg"
+

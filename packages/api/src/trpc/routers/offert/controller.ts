@@ -20,7 +20,7 @@ export const getSelfOffertsHandler = async (ctx: Context) => {
     const offerts = await getOfferts({
         ownerId: ctx.user?.id
     })
-    return offerts;
+    return offerts.reverse();
 }
 
 export const getOffertsHandler = async ({ input, ctx }: {
@@ -76,10 +76,7 @@ export const buyOffertHandler = async ({ ctx, offertId }: {
     offertId: string
 }) => {
     const userId = ctx.user?.id as string;
-    const user = await getUser({ id: userId }, {
-        ballance: true
-    });
-
+    const user = await getUser({ id: userId }, { ballance: true });
     const offert = await getOffert({ id: offertId }, {
         closed: true,
         ownerId: true,
@@ -103,12 +100,8 @@ export const buyOffertHandler = async ({ ctx, offertId }: {
     await updateUser({
         id: ctx.user?.id
     }, {
-        ballance: {
-            decrement: offert.price
-        },
-        boughtOfferts: {
-            push: offertId
-        }
+        ballance: { decrement: offert.price },
+        boughtOfferts: { push: offertId }
     });
 
     await updateOffert({
@@ -116,20 +109,41 @@ export const buyOffertHandler = async ({ ctx, offertId }: {
     }, {
         closed: true,
         buyerId: userId,
-        createdAt: new Date().toISOString()
+        boughtAt: new Date().toISOString()
     });
 
     await updateUser({
         id: offert.ownerId
-    },{
-        ballance: {
-            increment: offert.price
-        }
+    }, {
+        ballance: { increment: offert.price }
     })
 
     return offert;
 }
 
+export const getBoughtOffertsHandler = async (ctx: Context) => {
+    const user = await getUser({ id: ctx.user?.id as string }, { boughtOfferts: true });
+    const offerts = await Promise.all(
+        user.boughtOfferts.map(async (offertId) => {
+            const offert = await getOffert({ id: offertId }, {
+                id: true,
+                ownerId: true,
+                images: true,
+                price: true,
+                title: true,
+                boughtAt: true
+            });
+            const owner = await getUser({ id: offert.ownerId }, {
+                firstName: true,
+                lastName: true
+            })
+            return {
+                ...offert,
+                ownerName: owner.firstName + ' ' + owner.lastName
+            }
+        }))
+    return offerts.reverse();
+};
 
 interface createOffertInterface {
     title: string,

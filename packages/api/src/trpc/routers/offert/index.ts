@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { t, authedProcedure, unauthedProcedure, procedure } from "../../utils/[trpc]";
 
-import { createOffertHandler, getSelfOffertsHandler, getOffertsHandler, getSpecificOffertHandler, buyOffertHandler } from "./controller";
+import { createOffertHandler, getSelfOffertsHandler, getOffertsHandler, getSpecificOffertHandler, buyOffertHandler, getBoughtOffertsHandler } from "./controller";
 
 const offertRoute = t.router({
   createOffert:
@@ -21,6 +21,7 @@ const offertRoute = t.router({
           offert
         }
       }),
+      
   getSelfOfferts:
     authedProcedure
       .query(async ({ ctx }) => {
@@ -76,6 +77,16 @@ const offertRoute = t.router({
           status: "success",
           result
         };
+      }),
+  getBoughtOfferts:
+    authedProcedure
+      .query(async ({ ctx }) => {
+        const offerts = await getBoughtOffertsHandler(ctx);
+        console.log(offerts)
+        return {
+          status: "success",
+          offerts
+        }
       })
 })
 
