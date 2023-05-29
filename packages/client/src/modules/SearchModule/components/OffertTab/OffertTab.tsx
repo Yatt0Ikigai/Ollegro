@@ -29,7 +29,14 @@ export function OffertTab() {
         <h4 className='header header-md'>Offerts</h4>
         {
           data?.offerts && data.offerts.map((offert) => {
-            return <OffertRow id={offert.id} condition={offert.condition} title={offert.title} author={offert.ownerId} imgSource={offert.images[0]} price={offert.price} key={offert.id} />
+            return <OffertRow
+              id={offert.id}
+              condition={offert.condition}
+              title={offert.title}
+              author={offert.ownerName}
+              imgSource={offert.images[0]}
+              price={offert.price}
+              key={offert.id} />
           })
         }
       </div>

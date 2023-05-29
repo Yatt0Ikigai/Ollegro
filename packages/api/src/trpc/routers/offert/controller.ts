@@ -2,6 +2,7 @@ import { TRPCError } from '@trpc/server';
 import { Context } from '../../root';
 import { createOffert, getOfferts, getOffert, updateOffert } from '../../utils/offertUtil';
 import { getUser, updateUser } from '../../utils/userUtil';
+import { off } from 'process';
 
 export const createOffertHandler = async (input: createOffertInterface, ctx: Context) => {
     const offert = await createOffert({
@@ -41,9 +42,23 @@ export const getOffertsHandler = async ({ input, ctx }: {
         createdAt: true,
         price: true,
         title: true,
-        images: true
+        images: true,
+        ownerId: true,
+        condition: true
     })
-    return offerts;
+
+    const result = await Promise.all(offerts.map(async (e) => {
+        const owner = await getUser({ id: e.ownerId }, {
+            firstName: true,
+            lastName: true
+        })
+        return {
+            ...e,
+            ownerName: owner.firstName + " " + owner.lastName
+        }
+    }));
+
+    return result;
 }
 
 export const getSpecificOffertHandler = async ({
