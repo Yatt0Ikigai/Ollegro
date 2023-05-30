@@ -1,18 +1,21 @@
 import { TRPCError } from '@trpc/server';
+
 import { Context } from '../../root';
 import { createOffert, getOfferts, getOffert, updateOffert } from '../../utils/offertUtil';
 import { getUser, updateUser } from '../../utils/userUtil';
-import { off } from 'process';
+import { uploadImage } from "../../firebase"
 
 export const createOffertHandler = async (input: createOffertInterface, ctx: Context) => {
+    const link = await uploadImage(input.image);
+    
     const offert = await createOffert({
         ownerId: ctx.user?.id,
         description: input.description,
         price: Number(input.price.toFixed(2)),
         title: input.title,
-        images: input.image,
+        images: link,
         cathegoryId: input.cathegoryId
-    })
+    });
 
     return offert;
 }

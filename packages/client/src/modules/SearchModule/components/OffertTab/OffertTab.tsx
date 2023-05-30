@@ -9,8 +9,6 @@ export function OffertTab() {
   const [searchParams, setSearchParams] = useSearchParams();
   let { cathegoryId } = useParams();
 
-  console.log(searchParams.get("min_price"))
-
   let filters = [['min_price', "minPrice"], ['max_price', "maxPrice"], 'condition', [`string`, 'title']]
     .reduce((acc, el) => {
       if (el instanceof Array)
@@ -22,6 +20,8 @@ export function OffertTab() {
     ...filters,
     ...(cathegoryId ? { ["cathegoryId"]: cathegoryId } : {})
   });
+
+  
 
   return (
     <div className='white-box'>
