@@ -12,7 +12,6 @@ import { trpc } from 'utils/trpc';
 export function MyOffertsPage() {
     const navigate = useNavigate();
     const { data } = trpc.offert.getSelfOfferts.useQuery();
-
     useEffect(() => {
         if (Cookies.get("logged_in") !== "true") navigate('/')
     }, []);
@@ -39,6 +38,7 @@ export function MyOffertsPage() {
                                 title={e.title}
                                 closed={e.closed}
                                 key={`my-offert-${e.id}`}
+                                buyerId={e.buyerId}
                             />
                         )
                     })}
@@ -57,7 +57,8 @@ const MyOffertCard = ({
     title,
     createdDate,
     boughtDate,
-    closed
+    closed,
+    buyerId
 }: {
     imgSource: string,
     price: number,
@@ -65,13 +66,25 @@ const MyOffertCard = ({
     id: string,
     createdDate: string,
     closed: boolean,
-    boughtDate: string | null
+    boughtDate: string | null,
+    buyerId: string | null
 }) => {
+    const navigate = useNavigate();
+    const closeOffert = trpc.offert.closeOffert.useMutation({
+        onSuccess: () => {
+            navigate(0);
+        }
+    })
+
     return (
         <div className="white-box bought-product-card util-w-full" >
             <div className='util-flex util-spacebetween-main-axis'>
                 <div className="bought-product-card__header-date">Created {moment(createdDate).format("MMM DD YYYY")}</div>
-                {boughtDate && <div className="bought-product-card__header-date">Ended {moment(boughtDate).format("MMM DD YYYY")}</div>}
+                {buyerId && <div className="bought-product-card__header-date">Ended {moment(boughtDate).format("MMM DD YYYY")}</div>}
+                {!buyerId && boughtDate && <div className="bought-product-card__header-date">Closed {moment(boughtDate).format("MMM DD YYYY")}</div>}
+                {!closed && <button className='link' onClick={(e) => {
+                    closeOffert.mutate({ offertId: id });
+                }}>Close Offert</button>}
             </div>
             <div className="util-flex util-gap-xl">
                 <div className="bought-product-card__image">
@@ -85,7 +98,9 @@ const MyOffertCard = ({
                 <div className="bought-product-card__price">
                     {price} zł
                 </div>
-                <button className='submit-button util-h-max' disabled={closed}>Change Price</button>
+                <button className='submit-button util-h-max' disabled={closed} onClick={(e) => {
+                    {/* TODO */ }
+                }}>Change Price</button>
             </div>
         </div>
     )

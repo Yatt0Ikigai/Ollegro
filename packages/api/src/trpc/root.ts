@@ -62,7 +62,6 @@ export type Context = inferAsyncReturnType<typeof createContext>;
 
 const t = initTRPC.create();
 
-
 const appRouter = t.router({
     auth: authRouter,
     offert: offertRouter,

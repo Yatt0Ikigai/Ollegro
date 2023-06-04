@@ -1,7 +1,15 @@
 import { z } from 'zod';
 import { t, authedProcedure, unauthedProcedure, procedure } from "../../utils/[trpc]";
 
-import { createOffertHandler, getSelfOffertsHandler, getOffertsHandler, getSpecificOffertHandler, buyOffertHandler, getBoughtOffertsHandler } from "./controller";
+import {
+  createOffertHandler,
+  getSelfOffertsHandler,
+  getOffertsHandler,
+  getSpecificOffertHandler,
+  buyOffertHandler,
+  getBoughtOffertsHandler,
+  closeOffertHandler
+} from "./controller";
 
 const offertRoute = t.router({
   createOffert:
@@ -21,7 +29,7 @@ const offertRoute = t.router({
           offert
         }
       }),
-      
+
   getSelfOfferts:
     authedProcedure
       .query(async ({ ctx }) => {
@@ -44,7 +52,7 @@ const offertRoute = t.router({
           (e) => parseFloat(z.string().parse(e)),
           z.number()
         ).optional(),
-        condition: z.string().optional(),
+        condition: z.string().array(),
         cathegoryId: z.string().optional(),
       }))
       .query(async ({ ctx, input }) => {
@@ -87,7 +95,22 @@ const offertRoute = t.router({
           status: "success",
           offerts
         }
-      })
+      }),
+  closeOffert:
+    authedProcedure
+      .input(z.object({
+        offertId: z.string()
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const result = await closeOffertHandler({
+          ctx,
+          offertId: input.offertId,
+        })
+        return {
+          status: "success",
+          result
+        }
+      }),
 })
 
 

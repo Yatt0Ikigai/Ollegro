@@ -3,8 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
 import * as trpcExpress from "@trpc/server/adapters/express";
-import appRouter from "./src/trpc/root";
-import { createContext } from "./src/trpc/root";
+import appRouter from "./trpc/root";
+import { createContext } from "./trpc/root";
 
 dotenv.config();
 const port = 8080;

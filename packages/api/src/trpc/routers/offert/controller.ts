@@ -7,7 +7,7 @@ import { uploadImage } from "../../firebase"
 
 export const createOffertHandler = async (input: createOffertInterface, ctx: Context) => {
     const link = await uploadImage(input.image);
-    
+
     const offert = await createOffert({
         ownerId: ctx.user?.id,
         description: input.description,
@@ -38,7 +38,11 @@ export const getOffertsHandler = async ({ input, ctx }: {
             ...(input.maxPrice ? { lte: input.maxPrice } : {})
         },
         ...(input.cathegoryId ? { cathegoryId: input.cathegoryId } : {}),
-        ...(input.condition ? { condition: input.condition } : {}),
+        ...(input.condition?.length !== 0 ? {
+            condition: {
+                in: input.condition
+            }
+        } : {}),
         ...(input.title ? { title: { contains: input.title, mode: "insensitive" } } : {})
     }, {
         id: true,
@@ -163,6 +167,20 @@ export const getBoughtOffertsHandler = async (ctx: Context) => {
     return offerts.reverse();
 };
 
+export const closeOffertHandler = async ({ ctx, offertId }: {
+    ctx: Context,
+    offertId: string
+}) => {
+    const offert = await getOffert({ id: offertId });
+    if (offert.ownerId !== ctx.user?.id) throw new TRPCError({ code: "FORBIDDEN", message: "You can't close other people offert" });
+    await updateOffert({ id: offertId }, {
+        closed: true,
+        boughtAt: new Date().toISOString()
+    });
+    return "Successfully closed";
+}
+
+
 interface createOffertInterface {
     title: string,
     image: string,
@@ -175,7 +193,7 @@ interface createOffertInterface {
 interface searchOffertInterface {
     title: string,
     price: number,
-    condition: string,
+    condition: string[],
     minPrice: number,
     maxPrice: number,
     cathegoryId: string

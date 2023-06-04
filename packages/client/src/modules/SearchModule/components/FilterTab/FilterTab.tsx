@@ -16,8 +16,8 @@ export function FilterTab() {
     const url = location.search
     let min_price = getQueryValues(url, "min_price")[0];
     let max_price = getQueryValues(url, "max_price")[0];
-    let usedCondition = getQueryValues(url, "condition").find(e => e === "used");
-    let newCondition = getQueryValues(url, "condition").find(e => e === "new");
+    let usedCondition = getQueryValues(url, "used")[0];
+    let newCondition = getQueryValues(url, "new")[0];
 
     if (minimumPriceRef.current) minimumPriceRef.current.value = min_price ?? null;
     if (maximumPriceRef.current) maximumPriceRef.current.value = max_price ?? null;
@@ -38,8 +38,8 @@ export function FilterTab() {
 
       if (minimumPriceRef.current && minimumPriceRef.current.value) resultUrl = appendQuery(resultUrl, "min_price", minimumPriceRef.current.value);
       if (maximumPriceRef.current && maximumPriceRef.current.value) resultUrl = appendQuery(resultUrl, "max_price", maximumPriceRef.current.value);
-      if (newConditionRef.current && newConditionRef.current.checked) resultUrl = appendQuery(resultUrl, "condition", "new");
-      if (usedConditionRef.current && usedConditionRef.current.checked) resultUrl = appendQuery(resultUrl, "condition", "used");
+      if (newConditionRef.current && newConditionRef.current.checked) resultUrl = appendQuery(resultUrl, "new", "true");
+      if (usedConditionRef.current && usedConditionRef.current.checked) resultUrl = appendQuery(resultUrl, "used", "true");
 
       setSearchParams(resultUrl);
     }}>

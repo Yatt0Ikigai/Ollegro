@@ -9,19 +9,23 @@ export function OffertTab() {
   const [searchParams, setSearchParams] = useSearchParams();
   let { cathegoryId } = useParams();
 
-  let filters = [['min_price', "minPrice"], ['max_price', "maxPrice"], 'condition', [`string`, 'title']]
+  const filters = [['min_price', "minPrice"], ['max_price', "maxPrice"], [`string`, 'title']]
     .reduce((acc, el) => {
       if (el instanceof Array)
         return searchParams.get(el[0]) ? { ...acc, [el[1]]: searchParams.get(el[0]) } : acc
       return searchParams.get(el) ? { ...acc, [el]: searchParams.get(el) } : acc
     }, {});
+  
+  const conditions = []
+  if(searchParams.get('new')==="true") conditions.push("New")
+  if(searchParams.get('used')==="true") conditions.push("Used")
 
   const { data } = trpc.offert.getOfferts.useQuery({
     ...filters,
-    ...(cathegoryId ? { ["cathegoryId"]: cathegoryId } : {})
+    ...(cathegoryId ? { ["cathegoryId"]: cathegoryId } : {}),
+    condition: conditions
   });
 
-  
 
   return (
     <div className='white-box'>
