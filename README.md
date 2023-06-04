@@ -1,10 +1,16 @@
+## Instaling
+
+1. Add .env file to /packages/api
+2. Run 
+> "npm install --prefix ./" 
+in packages/client and packages/api
+
 ## Running Locally
 
-1. Install node dependencies in client:
->  cd ./packages/client  
->  npm install --prefix ./ 
-2. Make sure that you have flask@2.2 installed
-3. For starting (write command inside main directory)  
-   client: npm run start-client  
-   server: npm run start-server
-
+To run Project:
+1. Run 
+> docker-compose up
+2. 
+> Run npm run start-server
+3. 
+> Run npm run start-client
