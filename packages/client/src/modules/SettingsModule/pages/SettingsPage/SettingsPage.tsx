@@ -48,7 +48,7 @@ export const GeneralSettingsPage: React.FC = () => {
                     </section>
                 </div>
 
-                <div className="white-box overview-box util-flex util-center-second-axis">
+                <div className="white-box balance-box util-flex util-center-second-axis">
                     <div className="header header-md ">Current Balance: {data.user.ballance}</div>
                     <form
                         className="util-flex util-end-second-axis util-gap-md"
@@ -62,7 +62,7 @@ export const GeneralSettingsPage: React.FC = () => {
                     </form>
                 </div>
 
-                <div className="util-grid util-grid-cols-2 util-gap-xl">
+                <div className="settings-modals">
                     <div className="white-box settings-box">
                         <div className="settings-section">
                             <div className="util-h-full">
