@@ -1,7 +1,7 @@
 import { Prisma, Cathegory } from "@prisma/client"
 import { prisma } from "../prisma"
 
-export const createOffert = async (
+export const createCathegory = async (
     input: Partial<Prisma.CathegoryCreateInput>
 ) => {
     return (await prisma.cathegory.create({
@@ -9,7 +9,7 @@ export const createOffert = async (
     }) as Cathegory)
 }
 
-export const getOffert = async (
+export const getCathegory = async (
     where: Partial<Prisma.CathegoryWhereInput>,
     select?: Partial<Prisma.CathegorySelect>,
 ) => {

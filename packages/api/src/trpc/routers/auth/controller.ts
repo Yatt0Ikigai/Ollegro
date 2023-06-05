@@ -77,14 +77,14 @@ export const registerHandler = async ({
 
 export const loginHandler = async ({ input, ctx, }: { input: { email: string, password: string }, ctx: Context }) => {
   try {
-    const user = await findUser({ email: input.email }, { id: true, password: true });
+    const user = await findUser({ email: input.email }, { id: true, password: true, role: true });
     if (!user || !(await bcrypt.compare(input.password, user.password))) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
         message: 'Invalid email or password',
       });
     }
-    const { accessToken, refreshToken } = signTokens({ id: user.id, role: 'user' });
+    const { accessToken, refreshToken } = signTokens({ id: user.id, role: user.role });
 
     ctx.res.cookie('access_token', accessToken, { httpOnly: true });
     ctx.res.cookie('refresh_token', refreshToken, { httpOnly: true });

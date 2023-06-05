@@ -12,6 +12,7 @@ import authRouter from './routers/auth';
 import offertRouter from './routers/offert'
 import userRouter from './routers/user'
 import cathegoryRouter from './routers/cathegory'
+import adminRouter from './routers/admin'
 
 
 export const createContext = async ({ req, res, }: trpcExpress.CreateExpressContextOptions | CreateNextContextOptions) => {
@@ -67,6 +68,7 @@ const appRouter = t.router({
     offert: offertRouter,
     user: userRouter,
     cathegory: cathegoryRouter,
+    admin: adminRouter,
 })
 
 
