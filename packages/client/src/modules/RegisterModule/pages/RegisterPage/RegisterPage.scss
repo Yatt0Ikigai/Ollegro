@@ -1,5 +1,5 @@
 .register-container {
-    padding: 4rem 14rem 0rem 14rem;
+    padding: 2rem 0;
 }
 
 .register__box {
@@ -8,6 +8,10 @@
     background-color: white;
     border: 1px solid var(--color-accent);
     padding: 2rem;
+
+    @media (max-width: 768px) {
+        width: 25rem;
+    }
 }
 
 
@@ -16,6 +20,9 @@
     font-weight: 500;
     margin: 0 auto;
     width: 35rem;
+    @media (max-width: 768px) {
+        width: 25rem;
+    }
 }
 
 .register__form{
