@@ -1,11 +1,16 @@
 .search-header {
     font-size: 1.6rem;
     font-weight: 600;
-    color:black;
+    color: black;
 }
 
-.search-box{
+.search-box {
     display: grid;
     gap: 1rem;
     grid-template-columns: auto 1fr;
+
+
+    @media (max-width: 1200px) {
+        grid-template-columns: 1fr;
+    }
 }

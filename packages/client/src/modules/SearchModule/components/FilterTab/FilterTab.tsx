@@ -31,7 +31,7 @@ export function FilterTab() {
   }, [location])
 
   return (
-    <form className='white-box util-max-height-content' onSubmit={(e) => {
+    <form className='white-box util-h-max util-w-max util-self-center-main-axis' onSubmit={(e) => {
       e.preventDefault();
 
       let resultUrl = location.search.replace(/&.+/, '')
