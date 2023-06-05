@@ -11,7 +11,9 @@ import "./AdminPage.scss";
 
 export const AdminPage: React.FC = () => {
     const cathegoryRef = useRef<HTMLInputElement | null>(null);
+    const offertRef = useRef<HTMLInputElement | null>(null);
     const addCathegory = trpc.admin.addCathegory.useMutation();
+    const deleteOffert = trpc.admin.deleteOffert.useMutation();
 
     return (
         <div className="container">
@@ -34,8 +36,15 @@ export const AdminPage: React.FC = () => {
 
                 <section className="white-box">
                     <span className="header header-md">Delete Offert</span>
-                    <form className="util-flex util-align-center util-end-second-axis">
-                        <NormalizedInput placeholder="Offert Id" />
+                    <form className="util-flex util-align-center util-end-second-axis"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            if (!offertRef.current?.value) return;
+                            deleteOffert.mutate({
+                                offertId: offertRef.current?.value
+                            });
+                        }}>
+                        <NormalizedInput placeholder="Offert Id" ref={offertRef} />
                         <button className="submit-button util-h-max">Delete</button>
                     </form>
                 </section>
