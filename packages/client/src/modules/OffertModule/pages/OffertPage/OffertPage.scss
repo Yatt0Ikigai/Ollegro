@@ -1,11 +1,15 @@
 .search-header {
     font-size: 1.6rem;
     font-weight: 600;
-    color:black;
+    color: black;
 }
 
-.offert-box{
+.offert-box {
     display: grid;
     gap: 1rem;
     grid-template-columns: auto 400px;
+
+    @media (max-width: 1000px) {
+        grid-template-columns: auto;
+    }
 }
