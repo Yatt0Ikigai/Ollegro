@@ -29,7 +29,9 @@ export const AdminPage: React.FC = () => {
                                 cathegoryName: cathegoryRef.current?.value
                             });
                         }}>
-                        <NormalizedInput placeholder="Cathegory Name" ref={cathegoryRef} />
+                        <div className="util-flex-grow">
+                            <NormalizedInput placeholder="Cathegory Name" ref={cathegoryRef} />
+                        </div>
                         <button className="submit-button util-h-max">Create</button>
                     </form>
                 </section>
@@ -44,7 +46,9 @@ export const AdminPage: React.FC = () => {
                                 offertId: offertRef.current?.value
                             });
                         }}>
-                        <NormalizedInput placeholder="Offert Id" ref={offertRef} />
+                        <div className="util-flex-grow">
+                            <NormalizedInput placeholder="Offert Id" ref={offertRef} />
+                        </div>
                         <button className="submit-button util-h-max">Delete</button>
                     </form>
                 </section>
