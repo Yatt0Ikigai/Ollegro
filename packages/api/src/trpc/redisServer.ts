@@ -15,3 +15,7 @@ redisClient.connect()
 redisClient.on("ready", () => {
     console.log('✅ REDIS is running on port 6379');
 })
+
+redisClient.on('error', (err) => {
+    console.log('Redis error:', err);
+})

@@ -77,7 +77,7 @@ export function NavbarGlobalComponent() {
                         }
                         {
                             openedMenu && isLogged &&
-                            <div className='user-menu user-menu__not-logged'>
+                            <div className='user-menu user-menu__logged'>
                                 <div className='util-w-full'>
                                     <Link to={"/my-ollegro/offerts"} className='link '>My offerts</Link>
                                 </div>
@@ -86,6 +86,9 @@ export function NavbarGlobalComponent() {
                                 </div>
                                 <div className='util-w-full'>
                                     <Link to={"/my-ollegro/settings"} className='link '>Settings</Link>
+                                </div>
+                                <div className='util-w-full'>
+                                    <Link to={"/my-ollegro/mail"} className='link '>Admin Contact</Link>
                                 </div>
                                 <div className='custom-link' onClick={(e) => {
                                     logOut.mutate();

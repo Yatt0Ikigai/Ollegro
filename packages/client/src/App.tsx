@@ -20,7 +20,8 @@ import {
   BoughtProductsPage,
   MyOffertsPage,
   CreateOffertPage,
-  AdminPage
+  AdminPage,
+  MailPage
 } from "./modules";
 import Cookies from "js-cookie";
 
@@ -62,6 +63,7 @@ const App = () => {
               <Route path="bought-products" element={<BoughtProductsPage />} />
               <Route path="offerts" element={<MyOffertsPage />} />
               <Route path="create-offert" element={<CreateOffertPage />} />
+              <Route path="mail" element={<MailPage/>} />
             </Route>
             <Route path="/admin" element={<AdminPage />} />
           </Routes>

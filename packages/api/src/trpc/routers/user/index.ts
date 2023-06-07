@@ -1,6 +1,19 @@
 import { z } from 'zod';
-import { t, authedProcedure, unauthedProcedure, procedure } from "../../utils/[trpc]";
-import { changeEmailHandler, changeFirstNameHandler, changeLastNameHandler, changePasswordHandler, depositHandler, getInfoHandler } from "./controller"
+import {
+    t,
+    authedProcedure,
+    unauthedProcedure,
+    procedure
+} from "../../utils/[trpc]";
+import {
+    changeEmailHandler,
+    changeFirstNameHandler,
+    changeLastNameHandler,
+    changePasswordHandler,
+    depositHandler,
+    getInfoHandler,
+    sendMailHandler
+} from "./controller"
 
 const userRouter = t.router({
     changeEmail:
@@ -38,6 +51,15 @@ const userRouter = t.router({
         authedProcedure
             .query(async ({ ctx }) => {
                 return await getInfoHandler({ ctx });
+            }),
+    sendMail:
+        authedProcedure
+            .input(z.object({
+                subject: z.string(),
+                message: z.string()
+            }))
+            .mutation(async ({ ctx, input }) => {
+                return await sendMailHandler({ ctx, ...input });
             })
 })
 

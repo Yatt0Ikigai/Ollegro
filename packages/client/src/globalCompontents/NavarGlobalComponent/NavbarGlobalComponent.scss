@@ -112,8 +112,15 @@
     border: 1px solid var(--color-accent);
     transform: translateY(calc(100% + .5rem));
 
-    &__loged {
-        height: 24rem;
+    &__logged {
+        
+        & > *{
+            margin: .3rem 0;
+        }
+
+        & > *:not(:last-child){
+            border-bottom: 1px solid var(--color-accent);
+        }
     }
 
     &__not-logged {
