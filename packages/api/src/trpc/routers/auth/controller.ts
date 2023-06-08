@@ -89,6 +89,7 @@ export const loginHandler = async ({ input, ctx, }: { input: { email: string, pa
     ctx.res.cookie('access_token', accessToken, { httpOnly: true });
     ctx.res.cookie('refresh_token', refreshToken, { httpOnly: true });
     ctx.res.cookie('logged_in', true);
+    if (user.role === 'admin') ctx.res.cookie('admin', true);
 
     redisClient.sAdd(user.id, refreshToken);
 
@@ -107,9 +108,8 @@ export const logoutHandler = async ({ ctx }: { ctx: Context }) => {
     await redisClient.sRem(payload.id, ctx.req.cookies.refresh_token);
     ctx.res.cookie('access_token', '', { httpOnly: true, maxAge: -1 });
     ctx.res.cookie('refresh_token', '', { HttpOnly: true, maxAge: -1 });
-    ctx.res.cookie('logged_in', '', {
-      maxAge: -1,
-    });
+    ctx.res.cookie('logged_in', '', { maxAge: -1,});
+    ctx.res.cookie('admin', '', { maxAge: -1,});
   }
   return {
     status: 'success'

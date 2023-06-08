@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-
+import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     NavbarGlobalComponent,
     NormalizedInput
@@ -7,13 +7,20 @@ import {
 
 import { trpc } from "utils/trpc";
 import "./AdminPage.scss";
+import Cookies from "js-cookie";
 
 
 export const AdminPage: React.FC = () => {
+    const navigate = useNavigate();
     const cathegoryRef = useRef<HTMLInputElement | null>(null);
     const offertRef = useRef<HTMLInputElement | null>(null);
     const addCathegory = trpc.admin.addCathegory.useMutation();
     const deleteOffert = trpc.admin.deleteOffert.useMutation();
+
+
+    useEffect(() => {
+        if (Cookies.get("admin") !== "true") navigate('/')
+    }, [])
 
     return (
         <div className="container">

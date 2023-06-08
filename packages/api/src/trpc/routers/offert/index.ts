@@ -17,7 +17,7 @@ const offertRoute = t.router({
       .input(z.object({
         title: z.string(),
         image: z.string(),
-        description: z.string(),
+        description: z.string().max(1500, "description too long"),
         price: z.number(),
         condition: z.string().refine((e) => ["new", "used"].includes(e)),
         cathegoryId: z.string()
