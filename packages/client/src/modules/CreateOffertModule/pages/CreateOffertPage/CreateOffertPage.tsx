@@ -23,7 +23,7 @@ export const CreateOffertPage: React.FC = () => {
     const cathegoryRef = useRef<HTMLSelectElement | null>(null);
     const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
 
-    const [condition, setCondition] = useState("new");
+    const [condition, setCondition] = useState("New");
 
     const convertToBase64 = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files === null) return;
@@ -75,15 +75,15 @@ export const CreateOffertPage: React.FC = () => {
                     <fieldset className="form__fieldset" >
                         <legend>Select a condition</legend>
                         <div className="util-flex util-gap-md">
-                            <input type="radio" id="new" name="condition" value="new"
+                            <input type="radio" id="New" name="condition" value="New"
                                 checked onChange={(e) => {
-                                    e.target.value ? setCondition("new") : setCondition("false");
+                                    e.target.value ? setCondition("New") : setCondition("false");
                                 }} />
-                            <label htmlFor="new" className="util-w-full">New</label>
+                            <label htmlFor="New" className="util-w-full">New</label>
                         </div>
                         <div className="util-flex util-gap-md">
-                            <input type="radio" id="used" name="condition" value="used" />
-                            <label htmlFor="used" className="util-w-full">Used</label>
+                            <input type="radio" id="Used" name="condition" value="Used" />
+                            <label htmlFor="Used" className="util-w-full">Used</label>
                         </div>
                     </fieldset>
                     <select name="" id="" ref={cathegoryRef}>

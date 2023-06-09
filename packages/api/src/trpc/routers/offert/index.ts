@@ -19,7 +19,7 @@ const offertRoute = t.router({
         image: z.string(),
         description: z.string().max(1500, "description too long"),
         price: z.number(),
-        condition: z.string().refine((e) => ["new", "used"].includes(e)),
+        condition: z.string().refine((e) => ["New", "Used"].includes(e)),
         cathegoryId: z.string()
       }))
       .mutation(async ({ input, ctx }) => {
