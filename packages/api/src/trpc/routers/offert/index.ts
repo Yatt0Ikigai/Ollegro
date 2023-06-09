@@ -23,6 +23,7 @@ const offertRoute = t.router({
         cathegoryId: z.string()
       }))
       .mutation(async ({ input, ctx }) => {
+        console.log(input.condition)
         const offert = await createOffertHandler(input, ctx);
         return {
           status: "success",

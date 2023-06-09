@@ -72,18 +72,22 @@ export const CreateOffertPage: React.FC = () => {
                         placeholder="Price"
                         ref={priceRef}
                     />
-                    <fieldset className="form__fieldset" >
+                    <fieldset className="form__fieldset">
                         <legend>Select a condition</legend>
                         <div className="util-flex util-gap-md">
                             <input type="radio" id="New" name="condition" value="New"
-                                checked onChange={(e) => {
-                                    e.target.value ? setCondition("New") : setCondition("false");
+                                checked={condition === "New"} onChange={(e) => {
+                                    setCondition("New");
                                 }} />
                             <label htmlFor="New" className="util-w-full">New</label>
                         </div>
                         <div className="util-flex util-gap-md">
-                            <input type="radio" id="Used" name="condition" value="Used" />
-                            <label htmlFor="Used" className="util-w-full">Used</label>
+                            <input type="radio" id="Used" name="condition" value="Used"
+                            checked={condition === "Used"} 
+                            onChange={(e) =>{
+                                  setCondition("Used")
+                                }}/>
+                            <label htmlFor="Used" className="util-w-full" >Used</label>
                         </div>
                     </fieldset>
                     <select name="" id="" ref={cathegoryRef}>

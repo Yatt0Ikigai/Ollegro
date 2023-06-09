@@ -14,7 +14,8 @@ export const createOffertHandler = async (input: createOffertInterface, ctx: Con
         price: Number(input.price.toFixed(2)),
         title: input.title,
         images: link,
-        cathegoryId: input.cathegoryId
+        cathegoryId: input.cathegoryId,
+        condition: input.condition
     });
 
     return offert;
