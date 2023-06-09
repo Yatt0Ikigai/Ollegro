@@ -11,3 +11,7 @@ redisClient.on("ready", () => {
 redisClient.on('error', (err) => {
     console.log('Redis error:', err);
 })
+
+export function closeRedisInstance() {
+    redisClient.quit();
+}

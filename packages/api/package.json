@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node-dev ./src/index.ts",
-    "test": "dotenv -e .env.sample -- jest -i"
+    "test": "dotenv -e .env.sample -- jest -i --detectOpenHandles"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.241.0",

@@ -5,11 +5,7 @@ export const t = initTRPC.context<Context>().create()
 
 export const Authed = t.middleware(async ({ ctx, next }) => {
     if (ctx.user) return next();
-    else {
-        console.log('!authed');
-        ctx.res.cookie('logged_in', 'false');
-        throw new TRPCError({ code: "UNAUTHORIZED" })
-    }
+    throw new TRPCError({ code: "UNAUTHORIZED" })
 })
 
 export const unAuthed = t.middleware(async ({ ctx, next }) => {

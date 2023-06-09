@@ -52,8 +52,11 @@ export const depositHandler = async ({ amount, ctx }: { amount: number, ctx: Con
             increment: amount
         }
     })
+    const user = await getUser({ id: ctx.user?.id }, { ballance: true })
+    
     return {
         status: "success",
+        currentBalance: user.ballance
     }
 }
 
