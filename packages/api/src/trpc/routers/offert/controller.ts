@@ -4,6 +4,7 @@ import { Context } from '../../root';
 import { createOffert, getOfferts, getOffert, updateOffert } from '../../utils/offertUtil';
 import { getUser, updateUser } from '../../utils/userUtil';
 import { uploadImage } from "../../firebase"
+import { number, string } from 'zod';
 
 export const createOffertHandler = async (input: createOffertInterface, ctx: Context) => {
     const link = await uploadImage(input.image);
@@ -174,13 +175,26 @@ export const closeOffertHandler = async ({ ctx, offertId }: {
 }) => {
     const offert = await getOffert({ id: offertId });
     if (offert.ownerId !== ctx.user?.id) throw new TRPCError({ code: "FORBIDDEN", message: "You can't close other people offert" });
-    await updateOffert({ id: offertId }, {
+    const changedOffert = await updateOffert({ id: offertId }, {
         closed: true,
         boughtAt: new Date().toISOString()
     });
-    return "Successfully closed";
+    return changedOffert;
 }
 
+export const changeOffertPriceHandler = async ({ ctx, input }: {
+    ctx: Context,
+    input: {
+        offertId: string,
+        newPrice: number
+    }
+}) => {
+    const offert = await getOffert({ id: input.offertId });
+    if (offert.closed) throw new TRPCError({ code: "FORBIDDEN", message: "You can't change price after offert was closed" });
+    if (offert.ownerId != ctx.user?.id) throw new TRPCError({ code: "FORBIDDEN", message: "You can't change other people offert" });
+    const updatedOffert = await updateOffert({ id: input.offertId }, { price: input.newPrice });
+    return updatedOffert;
+}
 
 interface createOffertInterface {
     title: string,

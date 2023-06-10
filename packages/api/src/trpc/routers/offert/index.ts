@@ -8,7 +8,8 @@ import {
   getSpecificOffertHandler,
   buyOffertHandler,
   getBoughtOffertsHandler,
-  closeOffertHandler
+  closeOffertHandler,
+  changeOffertPriceHandler
 } from "./controller";
 
 const offertRoute = t.router({
@@ -112,6 +113,19 @@ const offertRoute = t.router({
           result
         }
       }),
+    changeOffertPrice:
+      authedProcedure
+      .input(z.object({
+        offertId: z.string(),
+        newPrice: z.number().positive()
+      }))
+      .mutation(async ({ctx, input}) => {
+        const offert = await changeOffertPriceHandler({ctx,input});
+        return {
+          status: "success",
+          offert
+        }
+      })
 })
 
 
