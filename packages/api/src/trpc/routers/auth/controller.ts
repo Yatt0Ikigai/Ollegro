@@ -52,11 +52,17 @@ export const registerHandler = async ({
 
     const { accessToken, refreshToken } = signTokens({ id: user.id, role: 'user' });
 
-    ctx.res.cookie('access_token', accessToken, { httpOnly: true });
-    ctx.res.cookie('refresh_token', refreshToken, { httpOnly: true });
-    ctx.res.cookie('logged_in', true);
+    try {
+      ctx.res.cookie('access_token', accessToken, { httpOnly: true });
+      ctx.res.cookie('refresh_token', refreshToken, { httpOnly: true });
+      ctx.res.cookie('logged_in', true);
 
-    redisClient.sAdd(user.id, refreshToken);
+      redisClient.sAdd(user.id, refreshToken);
+    } catch {
+      (err: any) => {
+        console.log(err);
+      }
+    }
 
     return {
       status: 'success',
@@ -108,8 +114,8 @@ export const logoutHandler = async ({ ctx }: { ctx: Context }) => {
     await redisClient.sRem(payload.id, ctx.req.cookies.refresh_token);
     ctx.res.cookie('access_token', '', { httpOnly: true, maxAge: -1 });
     ctx.res.cookie('refresh_token', '', { HttpOnly: true, maxAge: -1 });
-    ctx.res.cookie('logged_in', '', { maxAge: -1,});
-    ctx.res.cookie('admin', '', { maxAge: -1,});
+    ctx.res.cookie('logged_in', '', { maxAge: -1, });
+    ctx.res.cookie('admin', '', { maxAge: -1, });
   }
   return {
     status: 'success'

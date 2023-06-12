@@ -11,8 +11,7 @@ const authRouter = t.router({
           cathegoryName: z.string()
         })
       ).mutation(async ({ input }) => {
-        const result = await addCathegoryController({ cathegoryName: input.cathegoryName })
-        return result;
+        return await addCathegoryController({ cathegoryName: input.cathegoryName })
       }),
   deleteOffert:
     adminProcedure
@@ -21,8 +20,7 @@ const authRouter = t.router({
           offertId: z.string()
         }))
       .mutation(async ({ input }) => {
-        const result = await deleteOffertHandler({ offertId: input.offertId });
-        return result;
+        return await deleteOffertHandler({ offertId: input.offertId });
       })
 })
 

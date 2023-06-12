@@ -7,11 +7,7 @@ const cathegoryRouter = t.router({
   getCathegories:
     procedure
       .query(async () => {
-          const offert = await getCathegoriesHandler();
-          return {
-            status: "success",
-            offert
-          }
+          return await getCathegoriesHandler();
       }),
 })
 

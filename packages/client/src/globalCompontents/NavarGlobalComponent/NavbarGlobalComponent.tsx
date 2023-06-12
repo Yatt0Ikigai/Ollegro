@@ -45,7 +45,7 @@ export function NavbarGlobalComponent() {
                         <input type="text" placeholder='What are you looking for?' className='navbar__form-input' ref={searchRef} defaultValue={searchParams.get("string") || ""}/>
                         <select className='navbar__form-select' ref={cathegoryRef}>
                             <option value="" defaultChecked>All categories</option>
-                            {data && data.offert.map((v, index) => {
+                            {data && data.cathegories.map((v, index) => {
                                 return (
                                     <option value={v.id} selected={v.id === cathegoryId}>{v.name}</option>
                                 )

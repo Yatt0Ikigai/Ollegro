@@ -15,8 +15,8 @@ const authRouter = t.router({
   login:
     unauthedProcedure
       .input(z.object({
-        email: z.string().email("This is not a valid email."),
-        password: z.string(),
+        email: z.string().email("This is not a valid email.").nonempty(),
+        password: z.string().min(4, { message: "Too short password" }),
       }))
       .mutation(async ({ ctx, input }) => {
         return await loginHandler({ input, ctx });
@@ -26,9 +26,9 @@ const authRouter = t.router({
       .input(
         z.object({
           email: z.string().email("This is not a valid email."),
-          password: z.string(),
-          firstName: z.string(),
-          lastName: z.string()
+          password: z.string().min(4),
+          firstName: z.string().nonempty(),
+          lastName: z.string().nonempty()
         })
       ).mutation(async ({ ctx, input }) => {
         const user = await registerHandler({

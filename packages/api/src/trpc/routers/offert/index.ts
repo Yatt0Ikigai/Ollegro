@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { t, authedProcedure, unauthedProcedure, procedure } from "../../utils/[trpc]";
+import { t, authedProcedure, procedure } from "../../utils/[trpc]";
 
 import {
   createOffertHandler,
@@ -16,31 +16,21 @@ const offertRoute = t.router({
   createOffert:
     authedProcedure
       .input(z.object({
-        title: z.string(),
+        title: z.string().nonempty(),
         image: z.string(),
         description: z.string().max(1500, "description too long"),
-        price: z.number(),
+        price: z.number().min(1, { message: "Price can't be less than 1" }),
         condition: z.string().refine((e) => ["New", "Used"].includes(e)),
-        cathegoryId: z.string()
+        cathegoryId: z.string().nonempty()
       }))
       .mutation(async ({ input, ctx }) => {
-        console.log(input.condition)
-        const offert = await createOffertHandler(input, ctx);
-        return {
-          status: "success",
-          offert
-        }
+        return await createOffertHandler(input, ctx);
       }),
 
   getSelfOfferts:
     authedProcedure
       .query(async ({ ctx }) => {
-        const offerts = await getSelfOffertsHandler(ctx);
-
-        return {
-          status: "success",
-          offerts
-        }
+        return await getSelfOffertsHandler(ctx);
       }),
   getOfferts:
     procedure
@@ -58,13 +48,9 @@ const offertRoute = t.router({
         cathegoryId: z.string().optional(),
       }))
       .query(async ({ ctx, input }) => {
-        const offerts = await getOffertsHandler({
+        return await getOffertsHandler({
           input, ctx
-        });
-        return {
-          status: "success",
-          offerts
-        }
+        })
       }),
   getSpecificOffert:
     procedure
@@ -72,31 +58,18 @@ const offertRoute = t.router({
         id: z.string()
       }))
       .query(async ({ ctx, input }) => {
-        const offert = await getSpecificOffertHandler({ offertId: input.id, ctx });
-        return {
-          status: "success",
-          offert
-        }
+        return await getSpecificOffertHandler({ offertId: input.id, ctx });
       }),
   buyOffert:
     authedProcedure
       .input(z.string())
       .mutation(async ({ ctx, input }) => {
-        const result = await buyOffertHandler({ offertId: input, ctx });
-        return {
-          status: "success",
-          result
-        };
+        return await buyOffertHandler({ offertId: input, ctx });
       }),
   getBoughtOfferts:
     authedProcedure
       .query(async ({ ctx }) => {
-        const offerts = await getBoughtOffertsHandler(ctx);
-        console.log(offerts)
-        return {
-          status: "success",
-          offerts
-        }
+        return await getBoughtOffertsHandler(ctx);
       }),
   closeOffert:
     authedProcedure
@@ -104,27 +77,16 @@ const offertRoute = t.router({
         offertId: z.string()
       }))
       .mutation(async ({ ctx, input }) => {
-        const result = await closeOffertHandler({
-          ctx,
-          offertId: input.offertId,
-        })
-        return {
-          status: "success",
-          result
-        }
+        return await closeOffertHandler({ ctx,  offertId: input.offertId })
       }),
-    changeOffertPrice:
-      authedProcedure
+  changeOffertPrice:
+    authedProcedure
       .input(z.object({
         offertId: z.string(),
-        newPrice: z.number().positive()
+        newPrice: z.number().min(1, { message: "Price can't be less than 1" })
       }))
-      .mutation(async ({ctx, input}) => {
-        const offert = await changeOffertPriceHandler({ctx,input});
-        return {
-          status: "success",
-          offert
-        }
+      .mutation(async ({ ctx, input }) => {
+        return await changeOffertPriceHandler({ ctx, input });
       })
 })
 
