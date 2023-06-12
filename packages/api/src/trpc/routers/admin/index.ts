@@ -8,7 +8,7 @@ const authRouter = t.router({
     adminProcedure
       .input(
         z.object({
-          cathegoryName: z.string()
+          cathegoryName: z.string().nonempty()
         })
       ).mutation(async ({ input }) => {
         return await addCathegoryController({ cathegoryName: input.cathegoryName })
@@ -17,7 +17,7 @@ const authRouter = t.router({
     adminProcedure
       .input(
         z.object({
-          offertId: z.string()
+          offertId: z.string().length(24)
         }))
       .mutation(async ({ input }) => {
         return await deleteOffertHandler({ offertId: input.offertId });

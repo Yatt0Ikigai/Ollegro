@@ -43,7 +43,7 @@ const userRouter = t.router({
             }),
     depositMoney:
         authedProcedure
-            .input(z.number().refine((n) => n > 0))
+            .input(z.number().positive())
             .mutation(async ({ input, ctx }) => {
                 return await depositHandler({ ctx, amount: input })
             }),
@@ -55,8 +55,8 @@ const userRouter = t.router({
     sendMail:
         authedProcedure
             .input(z.object({
-                subject: z.string(),
-                message: z.string()
+                subject: z.string().nonempty(),
+                message: z.string().nonempty()
             }))
             .mutation(async ({ ctx, input }) => {
                 return await sendMailHandler({ ctx, ...input });

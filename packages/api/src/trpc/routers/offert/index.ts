@@ -17,7 +17,7 @@ const offertRoute = t.router({
     authedProcedure
       .input(z.object({
         title: z.string().nonempty(),
-        image: z.string(),
+        image: z.string().nonempty(),
         description: z.string().max(1500, "description too long"),
         price: z.number().min(1, { message: "Price can't be less than 1" }),
         condition: z.string().refine((e) => ["New", "Used"].includes(e)),
@@ -55,7 +55,7 @@ const offertRoute = t.router({
   getSpecificOffert:
     procedure
       .input(z.object({
-        id: z.string()
+        id: z.string().length(24)
       }))
       .query(async ({ ctx, input }) => {
         return await getSpecificOffertHandler({ offertId: input.id, ctx });
@@ -74,7 +74,7 @@ const offertRoute = t.router({
   closeOffert:
     authedProcedure
       .input(z.object({
-        offertId: z.string()
+        offertId: z.string().length(24)
       }))
       .mutation(async ({ ctx, input }) => {
         return await closeOffertHandler({ ctx,  offertId: input.offertId })
@@ -82,7 +82,7 @@ const offertRoute = t.router({
   changeOffertPrice:
     authedProcedure
       .input(z.object({
-        offertId: z.string(),
+        offertId: z.string().length(24),
         newPrice: z.number().min(1, { message: "Price can't be less than 1" })
       }))
       .mutation(async ({ ctx, input }) => {
