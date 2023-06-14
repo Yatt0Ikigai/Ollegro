@@ -3,6 +3,7 @@ import { BsShareFill } from "react-icons/bs";
 import "./ImageTab.scss";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import {getInfoToast} from "../../../../utils/ToastsProvider";
 
 export function ImageTab({
     title,
@@ -14,16 +15,7 @@ export function ImageTab({
     async function copyToClip() {
         await navigator.clipboard.writeText(location.href);
 
-        toast.info('Offers link copied to clipboard!', {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
+        getInfoToast('Offers link copied to clipboard!')
 
     }
 

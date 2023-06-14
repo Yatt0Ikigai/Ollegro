@@ -7,6 +7,8 @@ import { trpc } from "utils/trpc";
 
 import JSCookies from "js-cookie"
 import "./LoginPage.scss";
+import {getErrorToast} from "../../../../utils/ToastsProvider";
+import {ToastContainer} from "react-toastify";
 
 export const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -20,7 +22,9 @@ export const LoginPage: React.FC = () => {
             navigate('/');
         },
         onError: (e) => {
-           if(e.data && e.data.httpStatus === 401) alert("Invalid email or password")
+           // if(e.data && e.data.httpStatus === 401)
+               getErrorToast("Invalid email or password")
+            // else getErrorToast("Fill out all required fields")
         },
     });
 
@@ -34,7 +38,11 @@ export const LoginPage: React.FC = () => {
                         <form className="login__form"
                             onSubmit={async (e) => {
                                 e.preventDefault();
-                                if (!emailRef.current || !passwordRef.current) return;
+                                if ((!emailRef.current || emailRef.current?.value === '')
+                                || (!passwordRef.current || passwordRef.current?.value === '')) {
+                                    getErrorToast('Fill out all required fields')
+                                    return;
+                                }
                                 login.mutate({
                                     email: emailRef.current.value,
                                     password: passwordRef.current.value
@@ -63,6 +71,7 @@ export const LoginPage: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     );
 };

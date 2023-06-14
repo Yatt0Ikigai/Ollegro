@@ -4,12 +4,19 @@ import Cookies from "js-cookie";
 
 import { trpc } from "utils/trpc";
 import { NavbarGlobalComponent, NormalizedInput, NormalizedInputNumber } from "globalCompontents"
+import {toast, ToastContainer} from "react-toastify";
+import {getErrorToast, getInfoToast} from "../../../../utils/ToastsProvider";
 
 export const MailPage: React.FC = () => {
   const navigate = useNavigate();
 
   const sendMail = trpc.user.sendMail.useMutation({
     onSuccess: () => {
+      getInfoToast('Message sent!')
+      navigate("/")
+    },
+    onError:() => {
+      getErrorToast('Unable to send a message at the moment. Please try later.')
       navigate("/")
     }
   })
@@ -48,6 +55,7 @@ export const MailPage: React.FC = () => {
           </button>
         </form>
       </div>
+      <ToastContainer/>
     </div>
   )
 }

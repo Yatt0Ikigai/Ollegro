@@ -7,6 +7,7 @@ import moment from "moment";
 import { trpc } from "utils/trpc";
 
 import "./BoughtProductCard.scss";
+import {ToastContainer} from "react-toastify";
 
 export const BoughtProductsPage: React.FC = () => {
   const { data } = trpc.offert.getBoughtOfferts.useQuery();
@@ -36,6 +37,11 @@ export const BoughtProductsPage: React.FC = () => {
               />
             )
           })
+        }
+        {
+          <h4>
+            No products purchased yet
+          </h4>
         }
       </div>
     </div>
