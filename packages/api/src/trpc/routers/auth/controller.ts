@@ -66,7 +66,8 @@ export const registerHandler = async ({
 
     return {
       status: 'success',
-      accessToken
+      accessToken,
+      id: user.id
     };
   } catch (err: any) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
@@ -101,7 +102,8 @@ export const loginHandler = async ({ input, ctx, }: { input: { email: string, pa
 
     return {
       status: 'success',
-      accessToken
+      accessToken,
+ 
     };
   } catch (err: any) {
     throw err;

@@ -15,7 +15,7 @@ export const addCathegoryController = async ({ cathegoryName }: { cathegoryName:
         }
         const newCathegory = await createCathegory({ name });
         return {
-            status: "SUCCESS",
+            status: "success",
             newCathegory
         }
     } catch (err) { validateCatch(err) }
