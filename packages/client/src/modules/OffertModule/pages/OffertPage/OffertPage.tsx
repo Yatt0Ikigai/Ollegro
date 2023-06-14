@@ -7,6 +7,7 @@ import { ImageTab, DescriptionTab, ParametersTab, PurchaseTab, SeeTab } from "..
 
 import "./OffertPage.scss";
 import { trpc } from "utils/trpc";
+import {ToastContainer} from "react-toastify";
 
 export const OffertPage: React.FC = () => {
     let [searchParams, setSearchParams] = useSearchParams();
@@ -15,6 +16,8 @@ export const OffertPage: React.FC = () => {
         id: (id as string)
     });
 
+    // @ts-ignore
+    // @ts-ignore
     return (
         <div className="container">
             <NavbarGlobalComponent />
@@ -30,12 +33,13 @@ export const OffertPage: React.FC = () => {
                             </div>
                             <div className="util-flex util-flex-column util-gap-xl">
                                 <PurchaseTab id={id as string} price={data.offert.price} closed={data.offert.closed} isOwner={data.offert.isOwner} title={data.offert.title} />
-                                <SeeTab />
+                                <SeeTab contactEmail={data.offert.ownerEmail as string}/>
                             </div>
                         </div>
                     </div>
                 }
             </div>
+            <ToastContainer/>
         </div>
     );
 };
