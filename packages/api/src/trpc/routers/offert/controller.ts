@@ -88,9 +88,16 @@ export const getSpecificOffertHandler = async ({
         ownerId: true
     });
 
+    const owner = await getUser({
+        id: offert.ownerId
+    }, {
+        email: true
+    });
+
     return {
         ...offert,
-        isOwner: offert.ownerId === ctx.user?.id
+        isOwner: offert.ownerId === ctx.user?.id,
+        ownerEmail: owner.email
     }
 }
 
