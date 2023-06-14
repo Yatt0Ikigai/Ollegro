@@ -8,6 +8,8 @@ import "./MyOffertsPage.scss";
 import { NavbarGlobalComponent } from 'globalCompontents';
 import { trpc } from 'utils/trpc';
 
+import ChangePriceModal from "../../modals/ChangePrice";
+
 
 export function MyOffertsPage() {
     const navigate = useNavigate();
@@ -98,9 +100,7 @@ const MyOffertCard = ({
                 <div className="bought-product-card__price">
                     {price} zł
                 </div>
-                <button className='submit-button util-h-max' disabled={closed} onClick={(e) => {
-                    {/* TODO */ }
-                }}>Change Price</button>
+                <ChangePriceModal disabled={closed} offertId={id}/>
             </div>
         </div>
     )
