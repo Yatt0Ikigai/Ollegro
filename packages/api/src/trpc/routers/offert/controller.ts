@@ -98,7 +98,7 @@ export const getSpecificOffertHandler = async ({
     ctx: Context
 }) => {
     try {
-        const offert = await getOffert({ id: offertId }, {
+        const offert = await getOffert({id: offertId}, {
             id: true,
             cathegoryId: true,
             closed: true,
@@ -109,18 +109,26 @@ export const getSpecificOffertHandler = async ({
             condition: true,
             ownerId: true
         });
-        if (!offert) throw new TRPCError({ code: "NOT_FOUND" })
+
+        const owner = await getUser({
+            id: offert.ownerId
+        }, {
+            email: true
+        });
+
+        if (!offert) throw new TRPCError({code: "NOT_FOUND"})
+
         return {
             status: "success",
             offert: {
                 ...offert,
-                isOwner: offert?.ownerId === ctx.user?.id
+                isOwner: offert.ownerId === ctx.user?.id,
+                ownerEmail: owner.email
             }
         }
     } catch (err: any) { validateCatch(err) }
 
-
-}
+} 
 
 export const buyOffertHandler = async ({ ctx, offertId }: {
     ctx: Context,

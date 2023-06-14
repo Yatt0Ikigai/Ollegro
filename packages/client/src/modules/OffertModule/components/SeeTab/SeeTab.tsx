@@ -1,16 +1,32 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react'
+import "./SeeTab.scss"
 
-export function SeeTab() {
-  return (
-    <div className='white-box'>
-      <h4 className='header header-xl'>
-        See
-      </h4>
-      <div className='util-flex util-flex-column util-gap-sm'>
-        <Link to="/" className='link util-border-between util-pb-sm'>All seller's items</Link>
-        <Link to="/" className='link util-border-between util-pb-sm'>Ask a question </Link>
-      </div>
-    </div>
-  )
+export function SeeTab({ contactEmail}:{
+    contactEmail: string
+}) {
+    const [contactDetailsShown, setContactDetailsShown] = useState(false);
+
+    return (
+        <div className='white-box'>
+            <h4 className='header header-xl'>
+                See
+            </h4>
+            <div className='see_content'>
+                <button
+                    className='contact_details_button'
+                    onClick={() => setContactDetailsShown(!contactDetailsShown)}>
+                        <span>
+                            Sellers contact details
+                        </span>
+                        <div className={`arrow ${contactDetailsShown ? "arrow-up" : "arrow-down"}`}/>
+                    </button>
+                    {
+                        contactDetailsShown &&
+                        <div className='contact_details'>
+                            <text>{contactEmail}</text>
+                        </div>
+                    }
+            </div>
+        </div>
+    )
 }
