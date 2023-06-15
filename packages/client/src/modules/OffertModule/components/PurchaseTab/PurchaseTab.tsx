@@ -2,6 +2,7 @@ import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import {trpc} from 'utils/trpc'
 import {toast} from "react-toastify";
+import {getErrorToast} from "../../../../utils/ToastsProvider";
 
 export function PurchaseTab({
                                 price,
@@ -22,16 +23,7 @@ export function PurchaseTab({
             navigate("/my-ollegro/bought-products")
         },
         onError: (error) => {
-            toast.error('Payment did not come through due to: ' + error.message, {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            getErrorToast('Payment did not come through due to: ' + error)
         }
     })
 

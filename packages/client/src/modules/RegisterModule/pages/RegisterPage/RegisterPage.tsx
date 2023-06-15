@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 import { trpc } from "utils/trpc";
+import {getErrorToast} from "../../../../utils/ToastsProvider";
+import {ToastContainer} from "react-toastify";
 
 export const RegisterPage: React.FC = () => {
     const navigate = useNavigate();
@@ -20,6 +22,9 @@ export const RegisterPage: React.FC = () => {
     const createAccount = trpc.auth.register.useMutation({
         onSuccess: (e) => {
             navigate('/')
+        },
+        onError: (error) => {
+            getErrorToast('Unable to create account at the moment. Please try later.')
         }
     });
 
@@ -32,12 +37,15 @@ export const RegisterPage: React.FC = () => {
                     <form action="" className="register__form"
                         onSubmit={async (e) => {
                             e.preventDefault();
-                            if (emailRef.current === null || emailRef.current.value === '') return;
-                            if (passwordRef.current === null || passwordRef.current.value === '') return;
-                            if (firstNameRef.current === null || firstNameRef.current.value === '') return;
-                            if (lastNameRef.current === null || lastNameRef.current.value === '') return;
-                            if (overEighteenRef.current === null || !overEighteenRef.current.checked) return;
-                            if (agreedTermsRef.current === null || !agreedTermsRef.current.checked) return;
+                            if ((emailRef.current === null || emailRef.current.value === '')
+                            || (passwordRef.current === null || passwordRef.current.value === '')
+                            || (firstNameRef.current === null || firstNameRef.current.value === '')
+                            || (lastNameRef.current === null || lastNameRef.current.value === '')
+                            || (overEighteenRef.current === null || !overEighteenRef.current.checked)
+                            || (agreedTermsRef.current === null || !agreedTermsRef.current.checked)) {
+                                getErrorToast('Fill out all required fields')
+                                return;
+                            }
 
                             createAccount.mutate({
                                 email: emailRef.current.value,
@@ -65,15 +73,16 @@ export const RegisterPage: React.FC = () => {
                             <h3 className="register__form-row-header">3. Consents and declarations</h3>
                             <span>
                                 <input type="checkbox" ref={agreedTermsRef} id="form-terms&conditions" className="register__form-row-checkbox" />
-                                <label htmlFor="form-terms&conditions"> *I declate that I have read and accept <Link to={"/statute"} className="link">the Ollegro Terms & Conditions.</Link></label>
+                                <label htmlFor="form-terms&conditions"> *I declate that I have read and accept <Link to={"https://docs.google.com/document/d/1_1WsGHzUw6JuzB-8xvfWxBdHA0xVWCd5N0COEC78cI4/edit?usp=sharing"} className="link">the Ollegro Terms & Conditions.</Link></label>
                             </span>
                         </div>
-                        <button className="submit-button">
+                        <button className="submit-button" type="submit">
                             Create An Account
                         </button>
                     </form>
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     );
 };

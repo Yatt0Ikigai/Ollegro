@@ -6,6 +6,8 @@ import { trpc } from "utils/trpc";
 import { NavbarGlobalComponent, NormalizedInput, NormalizedInputNumber } from "globalCompontents"
 
 import "./CreateOffertPage.scss"
+import {getErrorToast} from "../../../../utils/ToastsProvider";
+import {ToastContainer} from "react-toastify";
 
 export const CreateOffertPage: React.FC = () => {
     const navigate = useNavigate();
@@ -14,6 +16,9 @@ export const CreateOffertPage: React.FC = () => {
     const createOffert = trpc.offert.createOffert.useMutation({
         onSuccess: () => {
             navigate("/my-ollegro/offerts")
+        },
+        onError: () => {
+            getErrorToast("Fill out all required fields")
         }
     })
     const { data } = trpc.cathegory.getCathegories.useQuery();
@@ -102,6 +107,7 @@ export const CreateOffertPage: React.FC = () => {
                     </button>
                 </form>
             </div>
+            <ToastContainer/>
         </div>
     )
 }

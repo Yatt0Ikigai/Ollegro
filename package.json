@@ -5,11 +5,14 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-      "start-client": "cd ./packages/client && npm start",
-      "start-server": "cd ./packages/api && npm start"
+        "start-client": "cd ./packages/client && npm start",
+        "start-server": "cd ./packages/api && npm start"
     },
     "workspaces": [
-      "packages/*"
+        "packages/*"
     ],
-    "devDependencies": {}
-  }
+    "dependencies": {
+        "@coreui/coreui": "^4.2.6",
+        "react-toastify": "^9.1.3"
+    }
+}

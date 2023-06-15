@@ -17,6 +17,7 @@ export function NavbarGlobalComponent() {
     const isLogged = Cookies.get("logged_in") === "true";
     const logOut = trpc.auth.logOut.useMutation({
         onSuccess: () => {
+            Cookies.set("logged_in", "false")
             navigate(0)
         }
     });
