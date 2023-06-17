@@ -20,10 +20,10 @@ export function NavbarGlobalComponent() {
             Cookies.set("logged_in", "false")
             navigate(0)
         }
-    });
-
+    });    
     let searchRef = useRef<HTMLInputElement | null>(null);
     let cathegoryRef = useRef<HTMLSelectElement | null>(null);
+    
 
     return (
         <nav className='navbar'>
@@ -45,10 +45,10 @@ export function NavbarGlobalComponent() {
                     }}>
                         <input type="text" placeholder='What are you looking for?' className='navbar__form-input' ref={searchRef} defaultValue={searchParams.get("string") || ""}/>
                         <select className='navbar__form-select' ref={cathegoryRef}>
-                            <option value="" defaultChecked>All categories</option>
+                            <option value="">All categories</option>
                             {data && data.cathegories.map((v, index) => {
                                 return (
-                                    <option value={v.id} selected={v.id === cathegoryId}>{v.name}</option>
+                                    <option value={v.id} key={`cathegory-${v.id}`} selected={cathegoryId === v.id}>{v.name}</option>
                                 )
                             })}
                         </select>

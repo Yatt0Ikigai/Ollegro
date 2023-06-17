@@ -105,10 +105,10 @@ export const sendMailHandler = async ({ ctx, message, subject }: ISendMailHandle
             },
         });
 
-        transporter.verify()
-
+        await transporter.verify();
+        
         const user = await getUser({ id: ctx.user?.id }, { email: true });
-
+        
         const mailOptions = {
             from: `${user.email} <ollegrouj@gmail.com>`,
             to: "ollegroUJ@gmail.com",
@@ -116,7 +116,8 @@ export const sendMailHandler = async ({ ctx, message, subject }: ISendMailHandle
             text: message,
         };
 
-        const mail = transporter.sendMail(mailOptions)
+        const mail = await transporter.sendMail(mailOptions);
+        
         if (!mail) return new TRPCError({
             code: 'INTERNAL_SERVER_ERROR',
             message: 'Message could be sent',

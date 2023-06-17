@@ -35,6 +35,7 @@ export const BoughtProductsPage: React.FC = () => {
                                     imgSource={offert.images[0]}
                                     price={offert.price}
                                     title={offert.title}
+                                    key={`boughOffert-${offert.id}`}
                                 />
                             )
                         })

@@ -98,7 +98,7 @@ export const CreateOffertPage: React.FC = () => {
                     <select name="" id="" ref={cathegoryRef}>
                         {data && data.cathegories.map((e) => {
                             return (
-                                <option value={e.id}>{e.name}</option>
+                                <option value={e.id} key={`cathegoryOption-${e.id}`}>{e.name}</option>
                             )
                         })}
                     </select>

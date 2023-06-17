@@ -14,10 +14,12 @@ export function ParametersTab({
       </h4>
       <div className=''>
         <table className='table util-w-full'>
-          <tr className='table-row'>
-            <td className='table-header'>Condition</td>
-            <td className='table-value'>{condition}</td>
-          </tr>
+          <tbody>
+            <tr className='table-row'>
+              <td className='table-header'>Condition</td>
+              <td className='table-value'>{condition}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
